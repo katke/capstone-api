@@ -3,14 +3,15 @@ Noise.destroy_all
 Perishable.destroy_all
 
 ## Add Stationary Locations
-def stationary_locations(file, noise_type)
+def stationary_locations(file, noise_type, seasonal)
   results = HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
   results.each do |r|
     Noise.create(
       description: r["common_name"],
       noise_type: noise_type,
       lat: r["latitude"],
-      lon: r["longitude"]
+      lon: r["longitude"],
+      seasonal: seasonal
     )
     print "."
   end
@@ -19,13 +20,13 @@ def stationary_locations(file, noise_type)
 end
 
 # Fire Stations
-stationary_locations("znfv-apni", "Fire Station")
+stationary_locations("znfv-apni", "Fire Station", false)
 
 # Public Schools
-stationary_locations("pmap-kbvr", "School")
+stationary_locations("pmap-kbvr", "School", true)
 
 # Higher Education
-stationary_locations("qawk-qmwr", "College")
+stationary_locations("qawk-qmwr", "College", true)
 
 # SLU Trolley Stops
-stationary_locations("4qvq-uf9z", "Trolley")
+stationary_locations("4qvq-uf9z", "Trolley", false)
