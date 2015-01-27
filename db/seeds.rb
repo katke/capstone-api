@@ -1,8 +1,9 @@
-## Clear Out Current Database
+## Clear Out Current Database!
+puts "Clearing Database..."
 Noise.destroy_all
 Perishable.destroy_all
 
-## Add Stationary Locations
+## Add Stationary Locations!
 def stationary_locations(noise_type, file, decibel, seasonal)
   results = HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
   results.each do |r|
@@ -20,7 +21,7 @@ def stationary_locations(noise_type, file, decibel, seasonal)
   puts "\n#{noise_type} Imported"  
 end
 
-# Stationary Locations Hash
+# Stationary Locations Hash!
 stationary = {
   "Fire Station" => { file: "znfv-apni", decibel: 0, seasonal: false },
   "School" => { file: "pmap-kbvr", decibel: 0, seasonal: true },
@@ -28,7 +29,8 @@ stationary = {
   "Trolley" => { file: "4qvq-uf9z", decibel: 70, seasonal: false }
 }
 
-# Loop Through Locations
+# Loop Through Locations!
 stationary.each do |k, v|
   stationary_locations(k, v[:file], v[:decibel], v[:seasonal])
 end
+puts "Stationary Locations Imported!"
