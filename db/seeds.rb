@@ -1,18 +1,22 @@
 require 'json'
 
-## Clear Out Current Database!
-puts "Clearing Database..."
-Noise.destroy_all
-Perishable.destroy_all
+#//////////////////////////////////////#
+#//  Methods For Seeding             //#
+#//////////////////////////////////////#
 
 ## Add Stationary Locations!
-def stationary_locations(noise_type, file, decibel, seasonal)
-  if file == "external"
-    results = File.read('./lib/assets/seattle-er.json')
-    results = JSON.parse(results)
+def get_json(file)
+  if file.match(/\//)
+    file_string = File.read("./lib/assets/points/#{file}.json")
+    JSON.parse(file_string)
   else
-    results = HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
+    HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
   end
+end
+
+def stationary_locations(noise_type, file, decibel, seasonal)
+  results = get_json(file)
+
   results.each do |r|
     Noise.create(
       description: r["common_name"],
@@ -28,17 +32,53 @@ def stationary_locations(noise_type, file, decibel, seasonal)
   puts "\n#{noise_type} Imported"
 end
 
-# Stationary Locations Hash!
-stationary = {
+# GeoJSON Extracted from GIS
+def gis_stationary_locations(noise_type, file, decibel, seasonal)
+  results = get_json(file)["features"]
+
+  results.each do |r|
+    Noise.create(
+      description: r["properties"]["NAME"],
+      noise_type: noise_type,
+      lat: r["geometry"]["coordinates"][0],
+      lon: r["geometry"]["coordinates"][1],
+      decibel: decibel,
+      seasonal: seasonal
+    )
+    print "."
+  end
+
+  puts "\n#{noise_type} Imported"
+end
+
+
+#//////////////////////////////////////#
+#// Actual Seeding                   //#
+#//////////////////////////////////////#
+
+## Clear Out Current Database!
+puts "Clearing Database..."
+Noise.destroy_all
+Perishable.destroy_all
+
+# Stationary Noise Hashes!
+regular_stationary = {
   "Fire Station" => { file: "znfv-apni", decibel: 0, seasonal: false },
   "School" => { file: "pmap-kbvr", decibel: 0, seasonal: true },
   "College" => { file: "qawk-qmwr", decibel: 0, seasonal: true },
   "Trolley" => { file: "4qvq-uf9z", decibel: 70, seasonal: false },
-  "Hospitals" => { file: "external", decibel: 125, seasonal: false }
+  "Hospitals" => { file: "custom/seattle-er", decibel: 125, seasonal: false }
 }
 
-# Loop Through Locations!
-stationary.each do |k, v|
+gis_stationary = {
+  "Police" => { file: "gis/police", decibel: 0, seasonal: false }
+}
+
+# Create Stationary Noises!
+regular_stationary.each do |k, v|
   stationary_locations(k, v[:file], v[:decibel], v[:seasonal])
 end
-puts "Stationary Locations Imported!"
+
+gis_stationary.each do |k, v|
+  gis_stationary_locations(k, v[:file], v[:decibel], v[:seasonal])
+end
