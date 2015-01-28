@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "NAME": "Seattle Police Headquarters", "ADDRESS": "610 5th Ave", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.329188575551314, 47.604205657005899 ] } },
+{ "type": "Feature", "properties": { "NAME": "KC Airport Law Enforcement", "ADDRESS": "7233 Perimeter Rd S", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.304135536342955, 47.5373785538699 ] } },
+{ "type": "Feature", "properties": { "NAME": "Seattle Police East Precinct", "ADDRESS": "1519 12th Ave", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.31727770731095, 47.614919690179633 ] } },
+{ "type": "Feature", "properties": { "NAME": "Seattle Police North Precinct", "ADDRESS": "10049 College Way N", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.334781076907717, 47.702936709423092 ] } },
+{ "type": "Feature", "properties": { "NAME": "Seattle Police South Precinct", "ADDRESS": "3001 S Myrtle St", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.293396667330214, 47.538586138299898 ] } },
+{ "type": "Feature", "properties": { "NAME": "KC Patrol Operations Division", "ADDRESS": "516 3rd Ave", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.330510255637165, 47.602650877481103 ] } },
+{ "type": "Feature", "properties": { "NAME": "WSP District 2 Seattle North Detachm.", "ADDRESS": "811 E Roanoke", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.321530494382785, 47.642977216115639 ] } },
+{ "type": "Feature", "properties": { "NAME": "Metro Transit Police Unit", "ADDRESS": "1301 Airport Way S", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.322801952961328, 47.5895735968124 ] } },
+{ "type": "Feature", "properties": { "NAME": "Seattle Police Southwest Precinct", "ADDRESS": "2300 SW Webster St", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.361898823346792, 47.535904161371541 ] } },
+{ "type": "Feature", "properties": { "NAME": "Seattle Police West Precinct", "ADDRESS": "810 Virginia St", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.336567294212003, 47.616234655229995 ] } },
+{ "type": "Feature", "properties": { "NAME": "UW Police Department", "ADDRESS": "1117 NE Boat St", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.316450581286958, 47.652335227802872 ] } },
+{ "type": "Feature", "properties": { "NAME": "Seattle Police Harbor Patrol Office", "ADDRESS": "1717 N Northlake Pl", "CITY": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.33763993504509, 47.64569144292453 ] } }
+]
+}
