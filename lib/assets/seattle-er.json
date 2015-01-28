@@ -1,0 +1,89 @@
+[ {
+    "address" : "1010 Spring St.",
+    "city_feature" : "Hospitals",
+    "common_name" : "Virginia Mason",
+    "longitude" : "-122.326018",
+    "latitude" : "47.610086"
+},
+
+{
+  "address" : "700 Minor Ave.",
+  "city_feature" : "Hospitals",
+  "common_name" : "Swedish Medical Center (First Hill)",
+  "longitude" : "-122.321945",
+  "latitude" : "47.608023"
+},
+
+{
+  "address" : "500 17th Avenue",
+  "city_feature" : "Hospitals",
+  "common_name" : "Swedish Medical Center (Cherry Hill)",
+  "longitude" : "-122.310702",
+  "latitude" : "47.606482"
+},
+
+{
+  "address" : "9th Avenue and Jefferson St.",
+  "city_feature" : "Hospitals",
+  "common_name" : "Harborview Medical Center",
+  "longitude" : "-122.324098",
+  "latitude" : "47.604853"
+},
+
+{
+  "address" : "10631 8th Ave NE",
+  "city_feature" : "Hospitals",
+  "common_name" : "Kindred Hospital",
+  "longitude" : "-122.321340",
+  "latitude" : "47.706527"
+},
+
+{
+  "address" : "201 16th Ave E",
+  "city_feature" : "Hospitals",
+  "common_name" : "Group Health (Capitol Hill)",
+  "longitude" : "-122.311857",
+  "latitude" : "47.620408"
+},
+
+{
+  "address" : "4800 Sand Pt Way NE",
+  "city_feature" : "Hospitals",
+  "common_name" : "Seattle Children's Hospital",
+  "longitude" : "-122.282232",
+  "latitude" : "47.662677"
+},
+
+{
+  "address" : "1959 Northeast Pacific Street",
+  "city_feature" : "Hospitals",
+  "common_name" : "UW Medical Center",
+  "longitude" : "-122.307563",
+  "latitude" : "47.648965"
+},
+
+{
+  "address" : "1550 N 115th St",
+  "city_feature" : "Hospitals",
+  "common_name" : "Northwest Hospital and Medical Center",
+  "longitude" : "-122.336862",
+  "latitude" : "47.714152"
+},
+
+{
+  "address" : "5350 Tallman Ave. NW",
+  "city_feature" : "Hospitals",
+  "common_name" : "Swedish Medical Center (Ballard)",
+  "longitude" : "-122.380854",
+  "latitude" : "47.668368"
+},
+
+{
+  "address" : "825 Eastlake Ave E",
+  "city_feature" : "Hospitals",
+  "common_name" : "Seattle Cancer Care Alliance",
+  "longitude" : "-122.329569",
+  "latitude" : "47.626520"
+}
+
+]
