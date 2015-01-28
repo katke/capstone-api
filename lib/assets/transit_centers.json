@@ -1,0 +1,20 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "NAME": "Bellevue Transit Center", "ADDRESS": "NE 6th St & 108th Ave NE", "LATITUDE": 47.615520, "LONGITUDE": -122.194969 }, "geometry": { "type": "Point", "coordinates": [ -122.194966855240992, 47.61552182119204 ] } },
+{ "type": "Feature", "properties": { "NAME": "Kirkland Transit Center", "ADDRESS": "3rd St & Kirkland Ave.", "LATITUDE": 47.676034, "LONGITUDE": -122.203694 }, "geometry": { "type": "Point", "coordinates": [ -122.203693065692349, 47.676035564718248 ] } },
+{ "type": "Feature", "properties": { "NAME": "Northgate Transit Center", "ADDRESS": "NE 102nd St & 1st Ave NE", "LATITUDE": 47.702018, "LONGITUDE": -122.327305 }, "geometry": { "type": "Point", "coordinates": [ -122.327303728695782, 47.70201996205801 ] } },
+{ "type": "Feature", "properties": { "NAME": "Renton Transit Center", "ADDRESS": "Burnett Ave S btwn S 2nd St & S 3rd St", "LATITUDE": 47.480437, "LONGITUDE": -122.208103 }, "geometry": { "type": "Point", "coordinates": [ -122.208100563858579, 47.480438621112633 ] } },
+{ "type": "Feature", "properties": { "NAME": "Issaquah Transit Center", "ADDRESS": "1050 17th Ave NW", "LATITUDE": 47.542012, "LONGITUDE": -122.062981 }, "geometry": { "type": "Point", "coordinates": [ -122.062979465817563, 47.542014640778348 ] } },
+{ "type": "Feature", "properties": { "NAME": "Auburn Transit Center", "ADDRESS": "1st St SW & A St SW", "LATITUDE": 47.306526, "LONGITUDE": -122.231029 }, "geometry": { "type": "Point", "coordinates": [ -122.231025618820297, 47.306528482913301 ] } },
+{ "type": "Feature", "properties": { "NAME": "Totem Lake Transit Center", "ADDRESS": "NE 128th St & 120th Ave NE", "LATITUDE": 47.714896, "LONGITUDE": -122.181035 }, "geometry": { "type": "Point", "coordinates": [ -122.181034116414537, 47.71489791023793 ] } },
+{ "type": "Feature", "properties": { "NAME": "Aurora Village Transit Center", "ADDRESS": "N 200th St & Highway 99", "LATITUDE": 47.774286, "LONGITUDE": -122.341286 }, "geometry": { "type": "Point", "coordinates": [ -122.341285091841968, 47.774287982871563 ] } },
+{ "type": "Feature", "properties": { "NAME": "Overlake Transit Center", "ADDRESS": "15590 NE 36th St", "LATITUDE": 47.644152, "LONGITUDE": -122.133191 }, "geometry": { "type": "Point", "coordinates": [ -122.133189076272544, 47.644154235245857 ] } },
+{ "type": "Feature", "properties": { "NAME": "Burien Transit Center", "ADDRESS": "209 SW 148th St", "LATITUDE": 47.469253, "LONGITUDE": -122.338831 }, "geometry": { "type": "Point", "coordinates": [ -122.338829091321969, 47.469255034277971 ] } },
+{ "type": "Feature", "properties": { "NAME": "Mt Baker Transit Center", "ADDRESS": "Rainier Ave S & S Forest St", "LATITUDE": 47.577595, "LONGITUDE": -122.297376 }, "geometry": { "type": "Point", "coordinates": [ -122.297373933629274, 47.577597009181979 ] } },
+{ "type": "Feature", "properties": { "NAME": "Federal Way Transit Center", "ADDRESS": "31621 23rd Ave S", "LATITUDE": 47.317587, "LONGITUDE": -122.304994 }, "geometry": { "type": "Point", "coordinates": [ -122.304991132639984, 47.317588590263334 ] } },
+{ "type": "Feature", "properties": { "NAME": "Redmond Transit Center", "ADDRESS": "16300 NE 83rd St", "LATITUDE": 47.676733, "LONGITUDE": -122.124711 }, "geometry": { "type": "Point", "coordinates": [ -122.124710109428293, 47.676735294319236 ] } }
+]
+}
