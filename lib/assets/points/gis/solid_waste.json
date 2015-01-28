@@ -3,12 +3,12 @@
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "SITENAME": "Third & Lander", "SITETYPE": "Transfer Station", "CITY": "Seattle", "OWNER": "Rabanco" }, "geometry": { "type": "Point", "coordinates": [ -122.330944928474281, 47.578159458090902 ] } },
-{ "type": "Feature", "properties": { "SITENAME": "Eastmont Recycling Center", "SITETYPE": "Transfer & Recycling", "CITY": "Seattle", "OWNER": "Waste Managment Company" }, "geometry": { "type": "Point", "coordinates": [ -122.336157621842801, 47.535907292578528 ] } },
-{ "type": "Feature", "properties": { "SITENAME": "Black River", "SITETYPE": "Transfer & Recycling", "CITY": "Seattle", "OWNER": "Rabanco" }, "geometry": { "type": "Point", "coordinates": [ -122.25172716837595, 47.477391475507702 ] } },
-{ "type": "Feature", "properties": { "SITENAME": "Argo Yard", "SITETYPE": "Transfer Station", "CITY": "Seattle", "OWNER": "Waste Managment Company" }, "geometry": { "type": "Point", "coordinates": [ -122.331761146961057, 47.559284299627848 ] } },
-{ "type": "Feature", "properties": { "SITENAME": "North Transfer Station", "SITETYPE": "Transfer Station", "CITY": "Seattle", "OWNER": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.340748984802758, 47.648726669529168 ] } },
-{ "type": "Feature", "properties": { "SITENAME": "South Transfer Station", "SITETYPE": "Transfer Station", "CITY": "Seattle", "OWNER": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.330213028914116, 47.530407113647961 ] } },
-{ "type": "Feature", "properties": { "SITENAME": "Northwest Container Services, Inc.", "SITETYPE": "Intermodal Facility", "CITY": "Seattle", "OWNER": "Private" }, "geometry": { "type": "Point", "coordinates": [ -122.324569507215472, 47.559805909351297 ] } }
+{ "type": "Feature", "properties": { "NAME": "Third & Lander", "ADDRESS": "Rabanco" }, "geometry": { "type": "Point", "coordinates": [ -122.330944928474281, 47.578159458090902 ] } },
+{ "type": "Feature", "properties": { "NAME": "Eastmont Recycling Center", "ADDRESS": "Waste Managment Company" }, "geometry": { "type": "Point", "coordinates": [ -122.336157621842801, 47.535907292578528 ] } },
+{ "type": "Feature", "properties": { "NAME": "Black River", "ADDRESS": "Rabanco" }, "geometry": { "type": "Point", "coordinates": [ -122.25172716837595, 47.477391475507702 ] } },
+{ "type": "Feature", "properties": { "NAME": "Argo Yard", "ADDRESS": "Waste Managment Company" }, "geometry": { "type": "Point", "coordinates": [ -122.331761146961057, 47.559284299627848 ] } },
+{ "type": "Feature", "properties": { "NAME": "North Transfer Station", "ADDRESS": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.340748984802758, 47.648726669529168 ] } },
+{ "type": "Feature", "properties": { "NAME": "South Transfer Station", "ADDRESS": "Seattle" }, "geometry": { "type": "Point", "coordinates": [ -122.330213028914116, 47.530407113647961 ] } },
+{ "type": "Feature", "properties": { "NAME": "Northwest Container Services, Inc.", "ADDRESS": "Private" }, "geometry": { "type": "Point", "coordinates": [ -122.324569507215472, 47.559805909351297 ] } }
 ]
 }
