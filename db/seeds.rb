@@ -71,7 +71,10 @@ regular_stationary = {
 }
 
 gis_stationary = {
-  "Police" => { file: "gis/police", decibel: 0, seasonal: false }
+  "Police" => { file: "gis/police", decibel: 0, seasonal: false },
+  "Bus Stop" => { file: "gis/bus_stops", decibel: 0, seasonal: false },
+  "Dump" => { file: "gis/solid_waste", decibel: 0, seasonal: false },
+  "Transit Center" => { file: "gis/transit_centers", decibel: 0, seasonal: false },
 }
 
 # Create Stationary Noises!
