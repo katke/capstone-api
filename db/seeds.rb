@@ -14,7 +14,7 @@ def get_json(file)
   end
 end
 
-def stationary_locations(noise_type, file, decibel, seasonal)
+def stationary_locations(noise_type, file, decibel, reach, seasonal)
   results = get_json(file)
 
   results.each do |r|
@@ -24,6 +24,7 @@ def stationary_locations(noise_type, file, decibel, seasonal)
       lat: r["latitude"],
       lon: r["longitude"],
       decibel: decibel,
+      reach: reach,
       seasonal: seasonal
     )
     print "."
@@ -33,7 +34,7 @@ def stationary_locations(noise_type, file, decibel, seasonal)
 end
 
 # GeoJSON Extracted from GIS
-def gis_stationary_locations(noise_type, file, decibel, seasonal)
+def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
   results = get_json(file)["features"]
 
   results.each do |r|
@@ -43,6 +44,7 @@ def gis_stationary_locations(noise_type, file, decibel, seasonal)
       lat: r["geometry"]["coordinates"][0],
       lon: r["geometry"]["coordinates"][1],
       decibel: decibel,
+      reach: reach,
       seasonal: seasonal
     )
     print "."
@@ -63,25 +65,25 @@ Perishable.destroy_all
 
 # Stationary Noise Hashes!
 regular_stationary = {
-  "Fire Station" => { file: "znfv-apni", decibel: 0, seasonal: false },
-  "School" => { file: "pmap-kbvr", decibel: 0, seasonal: true },
-  "College" => { file: "qawk-qmwr", decibel: 0, seasonal: true },
-  "Trolley" => { file: "4qvq-uf9z", decibel: 70, seasonal: false },
-  "Hospitals" => { file: "custom/seattle-er", decibel: 125, seasonal: false }
+  "Fire Station" => { file: "znfv-apni", decibel: 125, reach: 45932, seasonal: false },
+  "School" => { file: "pmap-kbvr", decibel: 70, reach: 104, seasonal: true },
+  "College" => { file: "qawk-qmwr", decibel: 70, reach: 104, seasonal: true },
+  "Trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 60, seasonal: false },
+  "Hospitals" => { file: "custom/seattle-er", decibel: 125, reach: 45932, seasonal: false }
 }
 
 gis_stationary = {
-  "Police" => { file: "gis/police", decibel: 0, seasonal: false },
-  "Bus Stop" => { file: "gis/bus_stops", decibel: 0, seasonal: false },
-  "Dump" => { file: "gis/solid_waste", decibel: 0, seasonal: false },
-  "Transit Center" => { file: "gis/transit_centers", decibel: 0, seasonal: false },
+  "Police" => { file: "gis/police", decibel: 125, reach: 45932, seasonal: false },
+  "Bus Stop" => { file: "gis/bus_stops", decibel: 74, reach: 164, seasonal: false },
+  "Dump" => { file: "gis/solid_waste", decibel: 93, reach: 1509, seasonal: false },
+  "Transit Center" => { file: "gis/transit_centers", decibel: 74, reach: 164, seasonal: false },
 }
 
 # Create Stationary Noises!
 regular_stationary.each do |k, v|
-  stationary_locations(k, v[:file], v[:decibel], v[:seasonal])
+  stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
 
 gis_stationary.each do |k, v|
-  gis_stationary_locations(k, v[:file], v[:decibel], v[:seasonal])
+  gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
