@@ -66,6 +66,9 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    factual-api (1.3.17)
+      json (~> 1.2, >= 1.2.0)
+      oauth (~> 0.4.4, >= 0.4.4)
     fastercsv (1.5.5)
     haml (4.0.6)
       tilt
@@ -88,6 +91,7 @@ GEM
     minitest (5.5.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
+    oauth (0.4.7)
     pg (0.18.1)
     rack (1.5.2)
     rack-test (0.6.3)
@@ -183,6 +187,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   dotenv-rails
   factory_girl_rails
+  factual-api
   httparty
   jbuilder (~> 2.0)
   jquery-rails

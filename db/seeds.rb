@@ -1,8 +1,28 @@
 require 'json'
-
+require 'factual'
 #//////////////////////////////////////#
 #//  Methods For Seeding             //#
 #//////////////////////////////////////#
+## Loop To Add Factual Data One Page At a Time
+def get_bars
+  factual = Factual.new(ENV[FACTUAL_OAUTH_KEY], ENV[FACTUAL_OAUTH_SECRET])
+  count = 1
+  page_num = 1
+  unless count == 0
+    rows = factual.table("places-us").filters("category_ids" => {"$includes" => 312}, "locality" => "Seattle").page(page_num, :per => 50).rows
+    count = rows.count
+    count.times do
+      rows.each do |bar|
+        Noise.create(description: bar["name"],
+                     noise_type: "Bar",
+                     lat: bar["latitude"],
+                     lon: bar["longitude"],
+                     decibel: 70,
+                     reach: 200
+                     )
+    end
+    page_num += 1
+end
 
 ## Add Stationary Locations!
 def get_json(file)

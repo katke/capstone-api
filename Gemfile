@@ -17,7 +17,7 @@ gem 'simplecov', :require => false, :group => :test
 gem 'rails_12factor', group: :production
 
 gem 'httparty'
-
+gem 'factual-api'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
