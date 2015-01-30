@@ -69,11 +69,12 @@ regular_stationary = {
   "School" => { file: "pmap-kbvr", decibel: 70, reach: 104, seasonal: true },
   "College" => { file: "qawk-qmwr", decibel: 70, reach: 104, seasonal: true },
   "Trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 60, seasonal: false },
-  "Hospitals" => { file: "custom/seattle-er", decibel: 125, reach: 45932, seasonal: false }
+  "Hospital" => { file: "custom/seattle-er", decibel: 125, reach: 45932, seasonal: false },
+  "Bar" => { file: "custom/bar_geolocation", decibel: 70, reach: 104, seasonal: false }
 }
 
 gis_stationary = {
-  "Police" => { file: "gis/police", decibel: 125, reach: 45932, seasonal: false },
+  "Police Station" => { file: "gis/police", decibel: 125, reach: 45932, seasonal: false },
   "Bus Stop" => { file: "gis/bus_stops", decibel: 74, reach: 164, seasonal: false },
   "Dump" => { file: "gis/solid_waste", decibel: 93, reach: 1509, seasonal: false },
   "Transit Center" => { file: "gis/transit_centers", decibel: 74, reach: 164, seasonal: false },
