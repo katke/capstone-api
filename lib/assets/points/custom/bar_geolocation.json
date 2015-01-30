@@ -1,4 +1,5 @@
-{"address":"801 1st Avenue, Seattle, WA 98104, USA","city_feature":"Bars","common_name":"FADO'S IRISH PUB ","longitude":"-122.335599","latitude":"47.603482"},
+[
+  {"address":"801 1st Avenue, Seattle, WA 98104, USA","city_feature":"Bars","common_name":"FADO'S IRISH PUB ","longitude":"-122.335599","latitude":"47.603482"},
 {"address":"5324 Ballard Avenue Northwest, Seattle, WA 98107, USA","city_feature":"Bars","common_name":"MOSHI MOSHI SUSHI ","longitude":"-122.3836833","latitude":"47.6670695"},
 {"address":"2343 California Avenue Southwest, Seattle, WA 98116, USA","city_feature":"Bars","common_name":"ADMIRAL ENTERTAINMENT ","longitude":"-122.3868933","latitude":"47.5817611"},
 {"address":"6135 Seaview Avenue Northwest, Seattle, WA 98107, USA","city_feature":"Bars","common_name":"ANTHONY'S HOMEPORT AT SHILSHOLE ","longitude":"-122.4078592","latitude":"47.67405290000001"},
@@ -1008,3 +1009,4 @@
 {"address":"227 9th Avenue North, Seattle, WA 98109, USA","city_feature":"Bars","common_name":"TEN ON 9TH ","longitude":"-122.340151","latitude":"47.620541"},
 {"address":"4500 9th Avenue Northeast #100, Seattle, WA 98105, USA","city_feature":"Bars","common_name":"SUNDANCE CINEMAS SEATTLE ","longitude":"-122.3180324","latitude":"47.6618936"},
 {"address":"727 Pine Street, Seattle, WA 98101, USA","city_feature":"Bars","common_name":"RUTH'S CHRIS STEAK HOUSE ","longitude":"-122.3337119","latitude":"47.6128288"},
+]
