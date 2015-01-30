@@ -41,8 +41,8 @@ def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
     Noise.create(
       description: r["properties"]["NAME"],
       noise_type: noise_type,
-      lat: r["geometry"]["coordinates"][0],
-      lon: r["geometry"]["coordinates"][1],
+      lat: r["geometry"]["coordinates"][1],
+      lon: r["geometry"]["coordinates"][0],
       decibel: decibel,
       reach: reach,
       seasonal: seasonal
