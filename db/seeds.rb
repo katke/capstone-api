@@ -126,14 +126,14 @@ stationary_perishable = {
 }
 
 # Create Stationary Noises!
-# regular_stationary.each do |k, v|
-#   stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-# end
+regular_stationary.each do |k, v|
+  stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
 
 stationary_perishable.each do |k, v|
   perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
 
-# gis_stationary.each do |k, v|
-#   gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-# end
+gis_stationary.each do |k, v|
+  gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
