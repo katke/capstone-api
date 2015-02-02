@@ -1,4 +1,5 @@
 require 'json'
+require 'date'
 
 #//////////////////////////////////////#
 #//  Methods For Seeding             //#
@@ -10,6 +11,7 @@ def get_json(file)
     file_string = File.read("./lib/assets/points/#{file}.json")
     JSON.parse(file_string)
   elsif file == "9yds-qdb3"
+    # Should we also add query to filter for construction type?
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=%27permit%20issued%27").parsed_response
   else
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
@@ -60,23 +62,30 @@ def perishable_locations(noise_type, file, decibel, reach, seasonal)
   results = get_json(file)
 
   results.each do |r|
-    noise = Noise.create(
-      description: r["description"],
-      noise_type: noise_type,
-      lat: r["latitude"],
-      lon: r["longitude"],
-      decibel: decibel,
-      reach: reach,
-      seasonal: seasonal
-    )
+    # Checks for existing expiration date
+    if r["expiration_date"]
+      # Check that permit is active
+      result = Date.today <=> r["expiration_date"].to_date
+      if result == -1
+        noise = Noise.create(
+          description: r["description"],
+          noise_type: noise_type,
+          lat: r["latitude"],
+          lon: r["longitude"],
+          decibel: decibel,
+          reach: reach,
+          seasonal: seasonal
+        )
 
-    Perishable.create(
-      noise_id: noise.id,
-      start: r["issue_date"],
-      end: r["expiration_date"]
-    )
+        Perishable.create(
+          noise_id: noise.id,
+          start: r["issue_date"],
+          end: r["expiration_date"]
+        )
 
-    print "."
+        print "."
+      end
+    end
   end
 
   puts "\n#{noise_type} Imported"
