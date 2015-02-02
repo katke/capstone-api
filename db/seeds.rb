@@ -9,6 +9,8 @@ def get_json(file)
   if file.match(/\//)
     file_string = File.read("./lib/assets/points/#{file}.json")
     JSON.parse(file_string)
+  elsif file == "9yds-qdb3"
+    HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=%27permit%20issued%27").parsed_response
   else
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
   end
@@ -53,6 +55,34 @@ def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
   puts "\n#{noise_type} Imported"
 end
 
+# Creating Perishable Noise Type
+def perishable_locations(noise_type, file, decibel, reach, seasonal)
+  results = get_json(file)
+
+  results.each do |r|
+    noise = Noise.create(
+      description: r["description"],
+      noise_type: noise_type,
+      lat: r["latitude"],
+      lon: r["longitude"],
+      decibel: decibel,
+      reach: reach,
+      seasonal: seasonal
+    )
+
+    Perishable.create(
+      noise_id: noise.id,
+      start: r["issue_date"],
+      end: r["expiration_date"]
+    )
+
+    print "."
+  end
+
+  puts "\n#{noise_type} Imported"
+
+end
+
 
 #//////////////////////////////////////#
 #// Actual Seeding                   //#
@@ -70,7 +100,8 @@ regular_stationary = {
   "College" => { file: "qawk-qmwr", decibel: 70, reach: 104, seasonal: true },
   "Trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 60, seasonal: false },
   "Hospital" => { file: "custom/seattle-er", decibel: 125, reach: 45932, seasonal: false },
-  "Bar" => { file: "custom/bar_geolocation", decibel: 70, reach: 104, seasonal: false }
+  "Bar" => { file: "custom/bar_geolocation", decibel: 70, reach: 104, seasonal: false },
+  # "Noise Complaint" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
 }
 
 gis_stationary = {
@@ -80,9 +111,17 @@ gis_stationary = {
   "Transit Center" => { file: "gis/transit_centers", decibel: 74, reach: 164, seasonal: false },
 }
 
+stationary_perishable = {
+  "Construction" => { file: "9yds-qdb3", decibel: 93, reach: 1509, seasonal: false }
+}
+
 # Create Stationary Noises!
 regular_stationary.each do |k, v|
   stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
+
+stationary_perishable.each do |k, v|
+  perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
 
 gis_stationary.each do |k, v|
