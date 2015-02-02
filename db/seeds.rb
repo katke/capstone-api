@@ -13,6 +13,8 @@ def get_json(file)
   elsif file == "9yds-qdb3"
     # Should we also add query to filter for construction type?
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=%27permit%20issued%27").parsed_response
+  elsif file == "j6ng-5q2r"
+    HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=%27permit%20issued%27").parsed_response
   else
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
   end
@@ -121,18 +123,19 @@ gis_stationary = {
 }
 
 stationary_perishable = {
-  "Construction" => { file: "9yds-qdb3", decibel: 93, reach: 1509, seasonal: false }
+  "Construction" => { file: "9yds-qdb3", decibel: 93, reach: 1509, seasonal: false },
+  "Demolition" => { file: "j6ng-5q2r", decibel: 100, reach: 2625, seasonal: false }
 }
 
 # Create Stationary Noises!
-regular_stationary.each do |k, v|
-  stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-end
+# regular_stationary.each do |k, v|
+#   stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+# end
 
 stationary_perishable.each do |k, v|
   perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
 
-gis_stationary.each do |k, v|
-  gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-end
+# gis_stationary.each do |k, v|
+#   gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+# end
