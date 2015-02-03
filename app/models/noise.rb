@@ -5,6 +5,6 @@ class Noise < ActiveRecord::Base
   end
 
   def self.nearby_noises(latitude, longitude)
-    Noise.where(lat: 47.902, lon: -122.9)
+    Noise.where("lat = ? AND lon = ?", 47.902, -122.9)
   end
 end
