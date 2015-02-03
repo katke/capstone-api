@@ -38,8 +38,9 @@ RSpec.describe NoisesController, :type => :controller do
     end
 
     it "accepts two arguments" do
-      get :score, {"latitude" => '-122.9', "longitude" => '47.9'}
-      expect(assigns(:latitude)).to eq('-122.9')
+      get :score, {"latitude" => '47.9', "longitude" => '-122.9'}
+      expect(assigns(:latitude)).to eq(47.9)
+      expect(assigns(:longitude)).to eq(-122.9)
     end
 
   end

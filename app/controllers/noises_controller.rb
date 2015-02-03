@@ -6,8 +6,8 @@ class NoisesController < ApplicationController
   end
 
   def score
-    @latitude = params["latitude"]
-    @longitude = params["longitude"]
+    @latitude = params["latitude"].to_f
+    @longitude = params["longitude"].to_f
     render json: "foo!"
   end
 
