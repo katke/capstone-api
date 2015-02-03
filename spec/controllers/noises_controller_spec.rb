@@ -32,19 +32,22 @@ RSpec.describe NoisesController, :type => :controller do
   end
 
   describe "GET #score" do
+    let!(:params) { {"latitude" => '47.9', "longitude" => '-122.9'} }
+
     it "is successful" do
-      get :score, {"latitude" => '47.9', "longitude" => '-122.9'}
+      get :score, params
       expect(response.status).to eq 200
     end
 
     it "accepts two arguments" do
-      get :score, {"latitude" => '47.9', "longitude" => '-122.9'}
+      get :score, params
       expect(assigns(:latitude)).to eq(47.9)
       expect(assigns(:longitude)).to eq(-122.9)
     end
 
     it "returns a letter grade" do
-      get :score, {"latitude" => '47.9', "longitude" => '-122.9'}
+      get :score, params
+      # expect(Noise).to receive(:get_score).and_return("A")
       expect(assigns(:grade)).to eq "A"
     end
 

@@ -11,7 +11,7 @@ class NoisesController < ApplicationController
     if @latitude == 0 || @longitude == 0
       render json: "No results", status: 400
     else
-      @grade = "A"
+      @grade = Noise.get_score(@latitude, @longitude)
       render json: @grade
     end
   end
