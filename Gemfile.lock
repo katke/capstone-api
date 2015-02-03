@@ -67,6 +67,7 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     fastercsv (1.5.5)
+    geocoder (1.2.7)
     haml (4.0.6)
       tilt
     highline (1.6.21)
@@ -184,6 +185,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   dotenv-rails
   factory_girl_rails
+  geocoder
   httparty
   jbuilder (~> 2.0)
   jquery-rails
