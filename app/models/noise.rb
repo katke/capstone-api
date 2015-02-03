@@ -11,4 +11,13 @@ class Noise < ActiveRecord::Base
     lon_lower_limit = longitude - 0.004
     Noise.where("lat BETWEEN ? AND ? AND lon BETWEEN ? AND ?", lat_lower_limit, lat_upper_limit, lon_lower_limit, lon_upper_limit)
   end
+
+  def self.get_decibel_total(array_of_noises)
+    total = 0
+    array_of_noises.each do |noise|
+      total += noise.decibel
+    end
+    return total
+  end
+
 end
