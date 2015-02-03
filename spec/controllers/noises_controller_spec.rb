@@ -47,7 +47,6 @@ RSpec.describe NoisesController, :type => :controller do
 
     it "returns a letter grade" do
       get :score, params
-      # expect(Noise).to receive(:get_score).and_return("A")
       expect(assigns(:grade)).to eq "A"
     end
 
@@ -55,8 +54,5 @@ RSpec.describe NoisesController, :type => :controller do
       get :score, {"latitude" => nil, "longitude" => nil}
       expect(response.status).to eq 400
     end
-
   end
-
-
 end

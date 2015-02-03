@@ -3,6 +3,7 @@ class Noise < ActiveRecord::Base
   def self.get_score(latitude, longitude)
     noises = nearby_noises(latitude, longitude)
     total = get_decibel_total(noises)
+
     if total >= 160
       "F"
     elsif total >= 90
@@ -16,7 +17,6 @@ class Noise < ActiveRecord::Base
     else
       "A"
     end
-
   end
 
   def self.nearby_noises(latitude, longitude)
@@ -28,11 +28,6 @@ class Noise < ActiveRecord::Base
   end
 
   def self.get_decibel_total(array_of_noises)
-    total = 0
-    array_of_noises.each do |noise|
-      total += noise.decibel
-    end
-    return total
+    array_of_noises.inject(0) { |sum, n| sum + n.decibel }
   end
-
 end

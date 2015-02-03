@@ -24,7 +24,6 @@ describe Noise do
 
   describe "#nearby_noises" do
 
-
     it "returns nearby locations" do
       result = Noise.nearby_noises(47.9, -122.9)
       expect(result).to eq(in_range_noises)
@@ -34,7 +33,6 @@ describe Noise do
       result = Noise.nearby_noises(47.9, -122.9)
       expect(result).not_to eq(:out_of_range_noise)
     end
-
   end
 
   describe "#get_decibel_total" do
@@ -43,6 +41,5 @@ describe Noise do
       result = Noise.get_decibel_total(in_range_noises)
       expect(result).to eq 170
     end
-
   end
 end
