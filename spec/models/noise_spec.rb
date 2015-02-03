@@ -15,6 +15,11 @@ describe Noise do
       result = Noise.get_score(47.9, -122.9)
       expect(result).to eq "F"
     end
+
+    it "return a score of A" do
+      result = Noise.get_score(42.8, -122.1)
+      expect(result).to eq "A"
+    end
   end
 
   describe "#nearby_noises" do
