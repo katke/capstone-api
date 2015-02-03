@@ -10,6 +10,11 @@ describe Noise do
       result = Noise.get_score(47.9, -122.9)
       expect(result).to match(/[A-F]/)
     end
+
+    it "returns a score of F" do
+      result = Noise.get_score(47.9, -122.9)
+      expect(result).to eq "F"
+    end
   end
 
   describe "#nearby_noises" do

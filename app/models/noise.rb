@@ -1,7 +1,22 @@
 class Noise < ActiveRecord::Base
 
   def self.get_score(latitude, longitude)
-    "A"
+    noises = nearby_noises(latitude, longitude)
+    total = get_decibel_total(noises)
+    if total >= 160
+      "F"
+    elsif total >= 90
+      "E"
+    elsif total >= 80
+      "D"
+    elsif total >= 70
+      "C"
+    elsif total >= 60
+      "B"
+    else
+      "A"
+    end
+
   end
 
   def self.nearby_noises(latitude, longitude)
