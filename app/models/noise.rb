@@ -3,7 +3,7 @@ class Noise < ActiveRecord::Base
 
   def self.get_score(latitude, longitude)
     noises = nearby_noises(latitude, longitude)
-    total = get_decibel_total(noises)
+    total = get_decibel_total(latitude, longitude, noises)
 
     if total >= 160
       "F"
@@ -24,8 +24,11 @@ class Noise < ActiveRecord::Base
     Noise.near([latitude, longitude], 0.13)
   end
 
-  def self.get_decibel_total(array_of_noises)
-    array_of_noises.inject(0) { |sum, n| sum + n.decibel }
-    #   Geocoder::Calculations.distance_between()
+  def self.get_decibel_total(origin_lat, origin_lon, array_of_noises)
+    noise_decibels = array_of_noises.map do |noise|
+      distance = Geocoder::Calculations.distance_between([origin_lat, origin_lon], [noise.lat, noise.lon])
+      noise.decibel - ((distance/2) * 6)
+    end
+    noise_decibels.sum
   end
 end

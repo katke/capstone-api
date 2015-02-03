@@ -38,8 +38,8 @@ describe Noise do
   describe "#get_decibel_total" do
 
     it "returns the total number of decibels" do
-      result = Noise.get_decibel_total(in_range_noises)
-      expect(result).to eq 170
+      result = Noise.get_decibel_total(47.9, -122.9, in_range_noises)
+      expect(result).to eq 169.6537540166278
     end
   end
 end
