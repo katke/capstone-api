@@ -5,4 +5,15 @@ class NoisesController < ApplicationController
     render json: @noises, status: 200
   end
 
+  def score
+    @latitude = params["latitude"].to_f
+    @longitude = params["longitude"].to_f
+    if @latitude == 0 || @longitude == 0
+      render json: "No results", status: 400
+    else
+      @grade = Noise.get_score(@latitude, @longitude)
+      render json: @grade
+    end
+  end
+
 end
