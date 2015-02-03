@@ -31,5 +31,14 @@ RSpec.describe NoisesController, :type => :controller do
 
   end
 
+  describe "GET #score" do
+    it "is successful" do
+      get :score
+      expect(response.status).to eq 200
+    end
+    
+
+  end
+
 
 end
