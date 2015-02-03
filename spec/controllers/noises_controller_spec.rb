@@ -33,7 +33,7 @@ RSpec.describe NoisesController, :type => :controller do
 
   describe "GET #score" do
     it "is successful" do
-      get :score
+      get :score, {"latitude" => '47.9', "longitude" => '-122.9'}
       expect(response.status).to eq 200
     end
 
@@ -41,6 +41,16 @@ RSpec.describe NoisesController, :type => :controller do
       get :score, {"latitude" => '47.9', "longitude" => '-122.9'}
       expect(assigns(:latitude)).to eq(47.9)
       expect(assigns(:longitude)).to eq(-122.9)
+    end
+
+    it "returns a letter grade" do
+      get :score, {"latitude" => '47.9', "longitude" => '-122.9'}
+      expect(assigns(:grade)).to eq "A"
+    end
+
+    it "is not successful" do
+      get :score, {"latitude" => nil, "longitude" => nil}
+      expect(response.status).to eq 400
     end
 
   end
