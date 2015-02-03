@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Noise do
-  let!(:in_range_noises) { [Noise.create(lat: 47.902, lon: -122.9, decibel: 100), Noise.create(lat: 47.9, lon: -122.902, decibel: 70)] }
+  let!(:in_range_noises) { [Noise.create(lat: 47.9, lon: -122.901, decibel: 70), Noise.create(lat: 47.901, lon: -122.9, decibel: 100)] }
   let!(:out_of_range_noise) { Noise.create(lat: 47.904, lon: -122.904) }
 
   describe "#get_score" do

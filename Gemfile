@@ -18,6 +18,7 @@ gem 'rails_12factor', group: :production
 
 gem 'httparty'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'geocoder'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
