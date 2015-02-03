@@ -10,9 +10,10 @@ def get_json(file)
   if file.match(/\//)
     file_string = File.read("./lib/assets/points/#{file}.json")
     JSON.parse(file_string)
-  elsif file == "9yds-qdb3" || file == "j6ng-5q2r"
-    # Should we also add query to filter for construction type?
-    HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=%27permit%20issued%27").parsed_response
+  elsif file == "j6ng-5q2r"
+    HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=permit%20issued").parsed_response
+  elsif file == "9yds-qdb3"
+    HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=permit%20issued&action_type=new").parsed_response
   else
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
   end
