@@ -7,7 +7,7 @@ describe Noise do
   describe "#get_score" do
 
     context "F Score" do
-      let!(:result)  { Noise.get_score(47.9, -122.9) }
+      let!(:result) { Noise.get_score(47.9, -122.9) }
 
       it "returns a letter score" do
         expect(result[:score]).to match(/[A-F]/)
@@ -18,17 +18,41 @@ describe Noise do
       end
     end
 
-    # context "E Score" do
-    # end
+    context "E Score" do
+      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 95) }
 
-    # context "D Score" do
-    # end
+      it "returns a score of E" do
+        result = Noise.get_score(25, 25)
+        expect(result[:score]).to eq "E"
+      end
+    end
 
-    # context "C Score" do
-    # end
+    context "D Score" do
+      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 85) }
 
-    # context "B Score" do
-    # end
+      it "returns a score of E" do
+        result = Noise.get_score(25, 25)
+        expect(result[:score]).to eq "D"
+      end
+    end
+
+    context "C Score" do
+      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 75) }
+
+      it "returns a score of E" do
+        result = Noise.get_score(25, 25)
+        expect(result[:score]).to eq "C"
+      end
+    end
+
+    context "B Score" do
+      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 65) }
+
+      it "returns a score of E" do
+        result = Noise.get_score(25, 25)
+        expect(result[:score]).to eq "B"
+      end
+    end
 
     context "A Score" do
       let!(:result) { Noise.get_score(42.8, -122.1) }
