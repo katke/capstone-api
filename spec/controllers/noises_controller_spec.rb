@@ -34,30 +34,34 @@ RSpec.describe NoisesController, :type => :controller do
   describe "GET #score" do
     let!(:params) { {"latitude" => '47.9', "longitude" => '-122.9'} }
 
-    it "is successful" do
-      get :score, params
-      expect(response.status).to eq 200
+    context "valid coordinates" do
+      before(:example) do
+        get :score, params
+      end
+
+      it "is successful" do
+        expect(response.status).to eq 200
+      end
+
+      it "accepts two arguments" do
+        expect(assigns(:latitude)).to eq(47.9)
+        expect(assigns(:longitude)).to eq(-122.9)
+      end
+
+      it "returns a letter grade" do
+        expect(assigns(:grade)).to eq "A"
+      end
+
+      # it "returns array of nearby locations" do
+      #   expect(assigns(:nearby_locations)).to eq 
+      # end
     end
 
-    it "accepts two arguments" do
-      get :score, params
-      expect(assigns(:latitude)).to eq(47.9)
-      expect(assigns(:longitude)).to eq(-122.9)
-    end
-
-    it "returns a letter grade" do
-      get :score, params
-      expect(assigns(:grade)).to eq "A"
-    end
-
-    # it "returns array of nearby locations" do
-    #   get :score, params
-    #   expect(assigns(:nearby_locations)).to eq 
-    # end
-
-    it "is not successful with invalid coordinates" do
-      get :score, {"latitude" => nil, "longitude" => nil}
-      expect(response.status).to eq 400
+    context "invalid coordiates" do
+      it "is not successful" do
+        get :score, {"latitude" => nil, "longitude" => nil}
+        expect(response.status).to eq 400
+      end
     end
   end
 end
