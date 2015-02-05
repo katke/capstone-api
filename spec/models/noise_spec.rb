@@ -6,31 +6,47 @@ describe Noise do
 
   describe "#get_score" do
 
-    it "returns a letter score" do
-      result = Noise.get_score(47.9, -122.9)
-      expect(result).to match(/[A-F]/)
+    context "F Score" do
+      let!(:result)  { Noise.get_score(47.9, -122.9) }
+
+      it "returns a letter score" do
+        expect(result).to match(/[A-F]/)
+      end
+
+      it "returns a score of F" do
+        expect(result).to eq "F"
+      end
     end
 
-    it "returns a score of F" do
-      result = Noise.get_score(47.9, -122.9)
-      expect(result).to eq "F"
-    end
+    # context "E Score" do
+    # end
 
-    it "return a score of A" do
-      result = Noise.get_score(42.8, -122.1)
-      expect(result).to eq "A"
+    # context "D Score" do
+    # end
+
+    # context "C Score" do
+    # end
+
+    # context "B Score" do
+    # end
+
+    context "A Score" do
+      let!(:result) { Noise.get_score(42.8, -122.1) }
+
+      it "return a score of A" do
+        expect(result).to eq "A"
+      end
     end
   end
 
   describe "#nearby_noises" do
+    let!(:result)  { Noise.nearby_noises(47.9, -122.9) }
 
     it "returns nearby locations" do
-      result = Noise.nearby_noises(47.9, -122.9)
       expect(result).to eq(in_range_noises)
     end
 
     it "does not include location that is .004 degrees away" do
-      result = Noise.nearby_noises(47.9, -122.9)
       expect(result).not_to eq(:out_of_range_noise)
     end
   end
