@@ -12,7 +12,7 @@ class NoisesController < ApplicationController
       render json: "No results", status: 400
     else
       @grade = Noise.get_score(@latitude, @longitude)
-      render json: @grade
+      render json: { score: @grade }
     end
   end
 
