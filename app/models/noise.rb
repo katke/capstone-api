@@ -2,22 +2,25 @@ class Noise < ActiveRecord::Base
   geocoded_by :description, :latitude  => :lat, :longitude => :lon
 
   def self.get_score(latitude, longitude)
-    noises = nearby_noises(latitude, longitude)
-    total = get_decibel_total(latitude, longitude, noises)
+    results = {}
+    results[:noises] = nearby_noises(latitude, longitude)
+    total = get_decibel_total(latitude, longitude, results[:noises])
 
     if total >= 160
-      "F"
+      results[:score] = "F"
     elsif total >= 90
-      "E"
+      results[:score] = "E"
     elsif total >= 80
-      "D"
+      results[:score] = "D"
     elsif total >= 70
-      "C"
+      results[:score] = "C"
     elsif total >= 60
-      "B"
+      results[:score] = "B"
     else
-      "A"
+      results[:score] = "A"
     end
+
+    return results
   end
 
   def self.nearby_noises(latitude, longitude)

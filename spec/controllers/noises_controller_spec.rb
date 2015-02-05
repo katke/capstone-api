@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NoisesController, :type => :controller do
+  render_views
 
   describe "GET #index" do
     it "is successful" do
@@ -32,27 +33,37 @@ RSpec.describe NoisesController, :type => :controller do
   end
 
   describe "GET #score" do
+    let!(:in_range_noises) { [create(:noise), create(:noise, lat: 47.901, lon: -122.9, decibel: 100)] }
     let!(:params) { {"latitude" => '47.9', "longitude" => '-122.9'} }
 
-    it "is successful" do
-      get :score, params
-      expect(response.status).to eq 200
+    context "valid coordinates" do
+      before(:example) do
+        get :score, params, :format => :json
+      end
+
+      it "is successful" do
+        expect(response.status).to eq 200
+      end
+
+      it "accepts two arguments" do
+        expect(assigns(:latitude)).to eq(47.9)
+        expect(assigns(:longitude)).to eq(-122.9)
+      end
+
+      it "returns a letter grade" do
+        expect(assigns(:grade)).to eq "F"
+      end
+
+      it "returns array of nearby locations" do
+        expect(assigns(:nearby_noises)).to eq in_range_noises
+      end
     end
 
-    it "accepts two arguments" do
-      get :score, params
-      expect(assigns(:latitude)).to eq(47.9)
-      expect(assigns(:longitude)).to eq(-122.9)
-    end
-
-    it "returns a letter grade" do
-      get :score, params
-      expect(assigns(:grade)).to eq "A"
-    end
-
-    it "is not successful" do
-      get :score, {"latitude" => nil, "longitude" => nil}
-      expect(response.status).to eq 400
+    context "invalid coordiates" do
+      it "is not successful" do
+        get :score, {"latitude" => nil, "longitude" => nil}
+        expect(response.status).to eq 400
+      end
     end
   end
 end
