@@ -10,11 +10,11 @@ describe Noise do
       let!(:result)  { Noise.get_score(47.9, -122.9) }
 
       it "returns a letter score" do
-        expect(result).to match(/[A-F]/)
+        expect(result[:score]).to match(/[A-F]/)
       end
 
       it "returns a score of F" do
-        expect(result).to eq "F"
+        expect(result[:score]).to eq "F"
       end
     end
 
@@ -34,7 +34,7 @@ describe Noise do
       let!(:result) { Noise.get_score(42.8, -122.1) }
 
       it "return a score of A" do
-        expect(result).to eq "A"
+        expect(result[:score]).to eq "A"
       end
     end
   end

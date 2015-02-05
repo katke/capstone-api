@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NoisesController, :type => :controller do
+  render_views
 
   describe "GET #index" do
     it "is successful" do
@@ -32,11 +33,12 @@ RSpec.describe NoisesController, :type => :controller do
   end
 
   describe "GET #score" do
+    let!(:in_range_noises) { [create(:noise), create(:noise, lat: 47.901, lon: -122.9, decibel: 100)] }
     let!(:params) { {"latitude" => '47.9', "longitude" => '-122.9'} }
 
     context "valid coordinates" do
       before(:example) do
-        get :score, params
+        get :score, params, :format => :json
       end
 
       it "is successful" do
@@ -49,12 +51,12 @@ RSpec.describe NoisesController, :type => :controller do
       end
 
       it "returns a letter grade" do
-        expect(assigns(:grade)).to eq "A"
+        expect(assigns(:grade)).to eq "F"
       end
 
-      # it "returns array of nearby locations" do
-      #   expect(assigns(:nearby_locations)).to eq 
-      # end
+      it "returns array of nearby locations" do
+        expect(assigns(:nearby_noises)).to eq in_range_noises
+      end
     end
 
     context "invalid coordiates" do
