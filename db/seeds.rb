@@ -103,17 +103,17 @@ def noise_complaints(noise_type, file, decibel, reach, seasonal)
   results.each do |r|
     unless /WEAPON/i.match(r["initial_type_description"]) || /SHOTS/i.match(r["initial_type_description"]) || /ASLT/i.match(r["initial_type_description"]) || /HARAS/i.match(r["initial_type_description"])
       noise = Noise.create(
-      if r["initial_type_description"]
         description: r["initial_type_description"],
-      else
-        description: "Noise Disturbance"
-      end
         noise_type: noise_type,
         lat: r["latitude"],
         lon: r["longitude"],
         decibel: decibel,
         reach: reach,
-        seasonal: seasonal)
+        seasonal: seasonal
+        )
+      unless noise.description
+        noise.update(description: "Noise Disturbance")
+      end
     end
     print "."
   end
@@ -152,23 +152,23 @@ stationary_perishable = {
   "Demolition" => { file: "j6ng-5q2r", decibel: 100, reach: 263, seasonal: false }
 }
 
-911_noise = {
+stationary_noise_complaints = {
   "Noise Complaints" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
 }
 
 # Create Stationary Noises!
-# regular_stationary.each do |k, v|
-#   stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-# end
-#
-# stationary_perishable.each do |k, v|
-#   perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-# end
+regular_stationary.each do |k, v|
+  stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
 
-911_noise.each do |k, v|
+stationary_perishable.each do |k, v|
+  perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
+
+stationary_noise_complaints.each do |k, v|
   noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
 
-# gis_stationary.each do |k, v|
-#   gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-# end
+gis_stationary.each do |k, v|
+  gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
