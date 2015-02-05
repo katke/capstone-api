@@ -14,6 +14,8 @@ def get_json(file)
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=permit%20issued").parsed_response
   elsif file == "9yds-qdb3"
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=permit%20issued&action_type=new").parsed_response
+  elsif file == "3k2p-39jp"
+    HTTParty.get("https://data.seattle.gov/resource/#{file}.json?event_clearance_description=noise%20disturbance&$limit=1000&$order=event_clearance_date%20DESC")
   else
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json").parsed_response
   end
@@ -95,6 +97,29 @@ def perishable_locations(noise_type, file, decibel, reach, seasonal)
 
 end
 
+def noise_complaints(noise_type, file, decibel, reach, seasonal)
+  results = get_json(file)
+
+  results.each do |r|
+    unless /WEAPON/i.match(r["initial_type_description"]) || /SHOTS/i.match(r["initial_type_description"]) || /ASLT/i.match(r["initial_type_description"]) || /HARAS/i.match(r["initial_type_description"])
+      noise = Noise.create(
+        description: r["initial_type_description"],
+        noise_type: noise_type,
+        lat: r["latitude"],
+        lon: r["longitude"],
+        decibel: decibel,
+        reach: reach,
+        seasonal: seasonal
+        )
+      unless noise.description
+        noise.update(description: "Noise Disturbance")
+      end
+    end
+    print "."
+  end
+  puts "\n#{noise_type} Imported"
+end
+
 
 #//////////////////////////////////////#
 #// Actual Seeding                   //#
@@ -112,8 +137,7 @@ regular_stationary = {
   "College" => { file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true },
   "Trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false },
   "Hospital" => { file: "custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
-  "Bar" => { file: "custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false },
-  # "Noise Complaint" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
+  "Bar" => { file: "custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false }
 }
 
 gis_stationary = {
@@ -128,6 +152,10 @@ stationary_perishable = {
   "Demolition" => { file: "j6ng-5q2r", decibel: 100, reach: 263, seasonal: false }
 }
 
+stationary_noise_complaints = {
+  "Noise Complaints" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
+}
+
 # Create Stationary Noises!
 regular_stationary.each do |k, v|
   stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
@@ -135,6 +163,10 @@ end
 
 stationary_perishable.each do |k, v|
   perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
+
+stationary_noise_complaints.each do |k, v|
+  noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
 
 gis_stationary.each do |k, v|
