@@ -50,7 +50,12 @@ RSpec.describe NoisesController, :type => :controller do
       expect(assigns(:grade)).to eq "A"
     end
 
-    it "is not successful" do
+    # it "returns array of nearby locations" do
+    #   get :score, params
+    #   expect(assigns(:nearby_locations)).to eq 
+    # end
+
+    it "is not successful with invalid coordinates" do
       get :score, {"latitude" => nil, "longitude" => nil}
       expect(response.status).to eq 400
     end
