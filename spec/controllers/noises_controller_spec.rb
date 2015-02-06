@@ -34,8 +34,8 @@ RSpec.describe NoisesController, :type => :controller do
   end
 
   describe "GET #score" do
-    let!(:in_range_noises) { [create(:noise), create(:noise, lat: 47.901, lon: -122.9, decibel: 100)] }
-    let!(:params) { {"latitude" => '47.9', "longitude" => '-122.9'} }
+    let!(:in_range_noises) { [create(:noise, lat: 47.5, lon: -122.451, decibel: 70), create(:noise, lat: 47.501, lon: -122.45, decibel: 100)] }
+    let!(:params) { {"latitude" => '47.5', "longitude" => '-122.45'} }
 
     context "valid coordinates" do
       before(:example) do
@@ -47,8 +47,8 @@ RSpec.describe NoisesController, :type => :controller do
       end
 
       it "accepts two arguments" do
-        expect(assigns(:latitude)).to eq(47.9)
-        expect(assigns(:longitude)).to eq(-122.9)
+        expect(assigns(:latitude)).to eq(47.5)
+        expect(assigns(:longitude)).to eq(-122.45)
       end
 
       it "returns a letter grade" do
@@ -60,7 +60,14 @@ RSpec.describe NoisesController, :type => :controller do
       end
     end
 
-    context "invalid coordiates" do
+    context "outside Seattle coordinates" do
+      it "is not successful" do
+        get :score, {"latitude" => 25, "longitude" => 25}
+        expect(response.status).to eq 400
+      end
+    end
+
+    context "invalid coordinates" do
       it "is not successful" do
         get :score, {"latitude" => nil, "longitude" => nil}
         expect(response.status).to eq 400
