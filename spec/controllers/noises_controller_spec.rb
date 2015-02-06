@@ -10,9 +10,10 @@ RSpec.describe NoisesController, :type => :controller do
     end
 
     it "assigns @noises" do
+      Noise.create
       number_of_noises = Noise.count
       get :index
-      expect(assigns(:noises).count).to eq number_of_noises
+      expect(assigns(:noises).length).to eq Noise.count
     end
 
     it "checks that noises render correctly" do
@@ -27,7 +28,7 @@ RSpec.describe NoisesController, :type => :controller do
       }
       noise = Noise.create(@expected)
       get :index
-      expect(JSON.parse(response.body)[0]["decibel"]).to eq @expected[:decibel]
+      expect(JSON.parse(response.body)[0]["noise_type"]).to eq @expected[:noise_type]
     end
 
   end
