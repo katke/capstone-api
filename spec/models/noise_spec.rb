@@ -82,4 +82,22 @@ describe Noise do
       expect(result).to eq 169.6537540166278
     end
   end
+
+  describe "#in_seattle?" do
+
+    it "returns true for coordinates in Seattle" do
+      result = Noise.in_seattle?(47.609998, -122.334362)
+      expect(result).to eq true
+    end
+
+    it "returns false for coordinates outside of Seattle" do
+      result = Noise.in_seattle?(25, 25)
+      expect(result).to eq false
+    end
+
+    it "returns false for invalid coordinates" do
+      result = Noise.in_seattle?(["foo"], ["bar"])
+      expect(result).to eq false
+    end
+  end
 end

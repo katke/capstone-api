@@ -34,4 +34,14 @@ class Noise < ActiveRecord::Base
     end
     noise_decibels.sum
   end
+
+  def self.in_seattle?(latitude, longitude)
+    if (latitude > 47.48172 && latitude < 47.734145) && (longitude < -122.224433 && longitude > -122.459696)
+      true
+    else
+      false
+    end
+  rescue NoMethodError
+    false
+  end
 end

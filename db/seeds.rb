@@ -8,7 +8,7 @@ require 'date'
 ## Add Stationary Locations!
 def get_json(file)
   if file.match(/\//)
-    file_string = File.read("./lib/assets/points/#{file}.json")
+    file_string = File.read("./lib/assets/#{file}.json")
     JSON.parse(file_string)
   elsif file == "j6ng-5q2r"
     HTTParty.get("https://data.seattle.gov/resource/#{file}.json?status=permit%20issued").parsed_response
@@ -22,6 +22,7 @@ def get_json(file)
 end
 
 def stationary_locations(noise_type, file, decibel, reach, seasonal)
+  puts "\n[Starting #{noise_type}]"
   results = get_json(file)
 
   results.each do |r|
@@ -44,6 +45,7 @@ end
 
 # GeoJSON Extracted from GIS
 def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
+  puts "\n[Starting #{noise_type}]"
   results = get_json(file)["features"]
 
   results.each do |r|
@@ -62,8 +64,37 @@ def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
   puts "\n#{noise_type} Imported"
 end
 
+# GeoJSON Roads from GIS
+def gis_lines(noise_type, file, decibel, reach, seasonal)
+  puts "\n[Starting #{noise_type}]"
+  results = get_json(file)["features"]
+
+  results.each do |r|
+    r["geometry"]["coordinates"].each do |f|
+      lat = f[1]
+      lon = f[0]
+
+      if Noise.in_seattle?(lat, lon)
+        Noise.create(
+          description: r["properties"]["StateRoute"],
+          noise_type: noise_type,
+          lat: lat,
+          lon: lon,
+          decibel: decibel,
+          reach: reach,
+          seasonal: seasonal
+        )
+        print "."
+      end
+    end
+  end
+
+  puts "\n#{noise_type} Imported"
+end
+
 # Creating Perishable Noise Type
 def perishable_locations(noise_type, file, decibel, reach, seasonal)
+  puts "\n[Starting #{noise_type}]"
   results = get_json(file)
 
   results.each do |r|
@@ -98,6 +129,7 @@ def perishable_locations(noise_type, file, decibel, reach, seasonal)
 end
 
 def noise_complaints(noise_type, file, decibel, reach, seasonal)
+  puts "\n[Starting #{noise_type}]"
   results = get_json(file)
 
   results.each do |r|
@@ -136,15 +168,15 @@ regular_stationary = {
   "School" => { file: "pmap-kbvr", decibel: 70, reach: 10, seasonal: true },
   "College" => { file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true },
   "Trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false },
-  "Hospital" => { file: "custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
-  "Bar" => { file: "custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false }
+  "Hospital" => { file: "points/custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
+  "Bar" => { file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false }
 }
 
 gis_stationary = {
-  "Police Station" => { file: "gis/police", decibel: 125, reach: 4593, seasonal: false },
-  "Bus Stop" => { file: "gis/bus_stops", decibel: 74, reach: 16, seasonal: false },
-  "Dump" => { file: "gis/solid_waste", decibel: 93, reach: 151, seasonal: false },
-  "Transit Center" => { file: "gis/transit_centers", decibel: 74, reach: 16, seasonal: false },
+  "Police Station" => { file: "points/gis/police", decibel: 125, reach: 4593, seasonal: false },
+  "Bus Stop" => { file: "points/gis/bus_stops", decibel: 74, reach: 16, seasonal: false },
+  "Dump" => { file: "points/gis/solid_waste", decibel: 93, reach: 151, seasonal: false },
+  "Transit Center" => { file: "points/gis/transit_centers", decibel: 74, reach: 16, seasonal: false }
 }
 
 stationary_perishable = {
@@ -154,6 +186,10 @@ stationary_perishable = {
 
 stationary_noise_complaints = {
   "Noise Complaints" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
+}
+
+gis_roads = {
+  "Freeways" => { file: "lines/freeway", decibel: 80, reach: 30, seasonal: false }
 }
 
 # Create Stationary Noises!
@@ -172,3 +208,9 @@ end
 gis_stationary.each do |k, v|
   gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
 end
+
+gis_roads.each do |k, v|
+  gis_lines(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+end
+
+puts "Seeding Complete! #{Noise.count} Noises in Database! :)"
