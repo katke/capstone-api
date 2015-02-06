@@ -19,7 +19,7 @@ server 'ec2-54-191-247-160.us-west-2.compute.amazonaws.com',
         user: 'ubuntu',
         roles: %w{web app db},
         ssh_options: {
-          keys: %w(/Users/Kat/.ssh/id_rsa.pub),
+          keys: %w(/Users/Kristina/.ssh/ec2-capstone-api.pem),
           forward_agent: false,
           auth_methods: %w(publickey)
         }

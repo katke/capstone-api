@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: capstone-api_production
-  username: capstone-api
+  username: ubuntu
   password: <%= ENV['CAPSTONE-API_DATABASE_PASSWORD'] %>
