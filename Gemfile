@@ -20,6 +20,16 @@ gem 'httparty'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'geocoder'
 
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
+end
+
+gem 'therubyracer', platforms: :ruby
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
