@@ -64,27 +64,29 @@ def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
   puts "\n#{noise_type} Imported"
 end
 
-# GeoJSON Roads from GIS
-def gis_lines(noise_type, file, decibel, reach, seasonal)
+# GeoJSON Lines from GIS
+def gis_lines(noise_type, file, decibel, reach, name)
   puts "\n[Starting #{noise_type}]"
   results = get_json(file)["features"]
 
   results.each do |r|
-    r["geometry"]["coordinates"].each do |f|
-      lat = f[1]
-      lon = f[0]
+    if r["geometry"]
+      r["geometry"]["coordinates"].each do |f|
+        lat = f[1]
+        lon = f[0]
 
-      if Noise.in_seattle?(lat, lon)
-        Noise.create(
-          description: r["properties"]["StateRoute"],
-          noise_type: noise_type,
-          lat: lat,
-          lon: lon,
-          decibel: decibel,
-          reach: reach,
-          seasonal: seasonal
-        )
-        print "."
+        if Noise.in_seattle?(lat, lon)
+          Noise.create(
+            description: r["properties"][name],
+            noise_type: noise_type,
+            lat: lat,
+            lon: lon,
+            decibel: decibel,
+            reach: reach,
+            seasonal: false
+          )
+          print "."
+        end
       end
     end
   end
@@ -189,7 +191,8 @@ stationary_noise_complaints = {
 }
 
 gis_roads = {
-  "Freeways" => { file: "lines/freeway", decibel: 80, reach: 30, seasonal: false }
+  "Freeway" => { file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute" },
+  "Railroad" => { file: "lines/railroads", decibel: 80, reach: 30, description: "Name"}
 }
 
 # Create Stationary Noises!
@@ -210,7 +213,7 @@ gis_stationary.each do |k, v|
 end
 
 gis_roads.each do |k, v|
-  gis_lines(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+  gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description])
 end
 
 puts "Seeding Complete! #{Noise.count} Noises in Database! :)"
