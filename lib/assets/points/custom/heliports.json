@@ -1,0 +1,121 @@
+[
+  {
+    "address" : "7277 Perimeter Road South",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "King County International Airport (Boeing Field)",
+    "longitude" : "-122.303677",
+    "latitude" : "47.536649"
+  },
+
+  {
+    "address" : "17801 International Boulevard",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Seattle-Tacoma International Airport",
+    "longitude" : "-122.302234",
+    "latitude" : "47.443861"
+  },
+
+  {
+    "address" : "1001 Fourth Avenue",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "1001 Fourth Avenue Plaza Heliport",
+    "longitude" : "-122.333953",
+    "latitude" : "47.606864"
+  },
+
+  {
+    "address" : "Boeing Plant 2 Heliport",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Boeing Plant 2 Heliport",
+    "longitude" : "-122.314398",
+    "latitude" : "47.536287"
+  },
+
+  {
+    "address" : "140 4th Avenue North",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Broadcast House Helistop Heliport",
+    "longitude" : "-122.348008",
+    "latitude" : "47.619154"
+  },
+
+  {
+    "address" : "4800 Sand Point Way Northeast",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Children's Hospital Emergency Heliport",
+    "longitude" : "-122.282232",
+    "latitude" : "47.662677"
+  },
+
+  {
+    "address" : "201 Elliott Avenue W",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Elliott Park Heliport",
+    "longitude" : "-122.360703",
+    "latitude" : "47.619858"
+  },
+
+  {
+    "address" : "Graves Field Heliport",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Graves Field Heliport",
+    "longitude" : "-122.298354",
+    "latitude" : "47.658109"
+  },
+
+  {
+    "address" : "Harborview Medical Center Heliport",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Harborview Medical Center Heliport",
+    "longitude" : "-122.324858",
+    "latitude" : "47.602987"
+  },
+
+  {
+    "address" : "Lake Union Heliport",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Lake Union Heliport",
+    "longitude" : "-122.323119",
+    "latitude" : "47.652052"
+  },
+
+  {
+    "address" : "Park 90 Heliport",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Park 90 Heliport",
+    "longitude" : "-122.332071",
+    "latitude" : "47.606209"
+  },
+
+  {
+    "address" : "1325 4th Avenue",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Puget Sound Plaza Heliport",
+    "longitude" : "-122.335938",
+    "latitude" : "47.608756"
+  },
+
+  {
+    "address" : "Seattle Private Number One Heliport",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Seattle Private Number One Heliport",
+    "longitude" : "-122.342902",
+    "latitude" : "47.621460"
+  },
+
+  {
+    "address" : "950 Westlake Avenue North",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Kenmore Air Harbor Seaplane Base",
+    "longitude" : "-122.339778",
+    "latitude" : "47.628564"
+  },
+
+  {
+    "address" : "1325 Fairview Avenue East",
+    "city_feature" : "Heliport/Airport",
+    "common_name" : "Seattle Seaplanes Seaplane Base",
+    "longitude" : "-122.327655",
+    "latitude" : "47.632191"
+  }
+]
