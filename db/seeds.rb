@@ -171,7 +171,8 @@ regular_stationary = {
   "College" => { file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true },
   "Trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false },
   "Hospital" => { file: "points/custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
-  "Bar" => { file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false }
+  "Bar" => { file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false },
+  "Stadium" => { file: "points/custom/stadiums", decibel: 100, reach: 263, seasonal: true }
 }
 
 gis_stationary = {
