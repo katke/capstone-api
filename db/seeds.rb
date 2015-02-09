@@ -166,35 +166,35 @@ Perishable.destroy_all
 
 # Stationary Noise Hashes!
 regular_stationary = {
-  "Fire Station" => { file: "znfv-apni", decibel: 125, reach: 4593, seasonal: false },
-  "School" => { file: "pmap-kbvr", decibel: 70, reach: 10, seasonal: true },
-  "College" => { file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true },
-  "Trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false },
-  "Hospital" => { file: "points/custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
-  "Bar" => { file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false },
-  "Heliport/Airport" => { file: "points/custom/heliports", decibel: 100, reach: 3117, seasonal: false },
-  "Stadium" => { file: "points/custom/stadiums", decibel: 100, reach: 263, seasonal: true }
+  "fireStation" => { file: "znfv-apni", decibel: 125, reach: 4593, seasonal: false },
+  "school" => { file: "pmap-kbvr", decibel: 70, reach: 10, seasonal: true },
+  "college" => { file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true },
+  "trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false },
+  "hospital" => { file: "points/custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
+  "bar" => { file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false },
+  "heliportOrAirport" => { file: "points/custom/heliports", decibel: 100, reach: 3117, seasonal: false },
+  "stadium" => { file: "points/custom/stadiums", decibel: 100, reach: 263, seasonal: true }
 }
 
 gis_stationary = {
-  "Police Station" => { file: "points/gis/police", decibel: 125, reach: 4593, seasonal: false },
-  "Bus Stop" => { file: "points/gis/bus_stops", decibel: 74, reach: 16, seasonal: false },
-  "Dump" => { file: "points/gis/solid_waste", decibel: 93, reach: 151, seasonal: false },
-  "Transit Center" => { file: "points/gis/transit_centers", decibel: 74, reach: 16, seasonal: false }
+  "policeStation" => { file: "points/gis/police", decibel: 125, reach: 4593, seasonal: false },
+  "busStop" => { file: "points/gis/bus_stops", decibel: 74, reach: 16, seasonal: false },
+  "dump" => { file: "points/gis/solid_waste", decibel: 93, reach: 151, seasonal: false },
+  "transitCenter" => { file: "points/gis/transit_centers", decibel: 74, reach: 16, seasonal: false }
 }
 
 stationary_perishable = {
-  "Construction" => { file: "9yds-qdb3", decibel: 93, reach: 151, seasonal: false },
-  "Demolition" => { file: "j6ng-5q2r", decibel: 100, reach: 263, seasonal: false }
+  "construction" => { file: "9yds-qdb3", decibel: 93, reach: 151, seasonal: false },
+  "demolition" => { file: "j6ng-5q2r", decibel: 100, reach: 263, seasonal: false }
 }
 
 stationary_noise_complaints = {
-  "Noise Complaints" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
+  "noiseComplaints" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
 }
 
 gis_roads = {
-  "Freeway" => { file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute" },
-  "Railroad" => { file: "lines/railroads", decibel: 80, reach: 30, description: "Name"}
+  "freeway" => { file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute" },
+  "railroad" => { file: "lines/railroads", decibel: 80, reach: 30, description: "Name"}
 }
 
 # Create Stationary Noises!
