@@ -28,8 +28,8 @@ def stationary_locations(noise_type, file, decibel, reach, seasonal)
   results.each do |r|
     common_name = r["common_name"]
     common_name = common_name.strip
-    Noise.create(
-      description: common_name,
+    noise = Noise.create(
+      description: "common_name",
       noise_type: noise_type,
       lat: r["latitude"],
       lon: r["longitude"],
@@ -37,6 +37,11 @@ def stationary_locations(noise_type, file, decibel, reach, seasonal)
       reach: reach,
       seasonal: seasonal
     )
+
+    if noise.noise_type == "trolley"
+      noise.update(description: "Trolley - #{common_name}", noise_type: "transit")
+    end
+
     print "."
   end
 
@@ -49,7 +54,7 @@ def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
   results = get_json(file)["features"]
 
   results.each do |r|
-    Noise.create(
+    noise = Noise.create(
       description: r["properties"]["NAME"],
       noise_type: noise_type,
       lat: r["geometry"]["coordinates"][1],
@@ -58,6 +63,13 @@ def gis_stationary_locations(noise_type, file, decibel, reach, seasonal)
       reach: reach,
       seasonal: seasonal
     )
+
+    if noise.noise_type == "busStop"
+      noise.update(description: "Bus Stop - #{r['properties']['NAME']}", noise_type: "transit")
+    elsif noise.noise_type == "transitCenter"
+      noise.update(description: "Transit Center - #{r['properties']['NAME']}", noise_type: "transit")
+    end
+
     print "."
   end
 
@@ -194,7 +206,7 @@ stationary_noise_complaints = {
 
 gis_roads = {
   "freeway" => { file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute" },
-  "railroad" => { file: "lines/railroads", decibel: 80, reach: 30, description: "Name"}
+  # "railroad" => { file: "lines/railroads", decibel: 80, reach: 30, description: "Name"} ## Data seems inacurrate?
 }
 
 # Create Stationary Noises!
