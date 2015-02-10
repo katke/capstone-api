@@ -1,7 +1,7 @@
 class NoisesController < ApplicationController
 
   def index
-    @noises = Noise.select('id, noise_type, lat, lon')
+    @noises = Noise.select('id, noise_type, lat, lon, decibel, reach')
     render json: @noises, status: 200
   end
 
