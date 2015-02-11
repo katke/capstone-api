@@ -88,16 +88,26 @@ describe Noise do
     ] }
     let!(:result) { Noise.group_noises(array) }
 
-    it "returns array of noise objects" do
-      expect(result.first.class).to eq(Noise)
+    it "groups busStops by street address" do
+      all_bus_stops = result.find_all { |i| i[:noise_type] == "busStop" }
+      expect(all_bus_stops.length).to eq(2)
     end
 
-    it "groups busStops by street address" do
-      all_bus_stops = result.find_all { |i|  i.noise_type == "busStop" }
-      # 4th_bus_stops = result.find_all { |i|  i.noise_type == "busStop" && i.description == "4th Ave" }
-      # 5th_bus_stops = result.find_all { |i|  i.noise_type == "busStop" && i.description == "5th Ave" }
+    it "groups freeways by freeway number" do
+      all_freeways = result.find_all { |i| i[:noise_type] == "freeway" }
+      expect(all_freeways.length).to eq(2)
+    end
 
-      expect(all_bus_stops.length).to eq(2)
+    it "formats as expected" do
+      finished_array = [
+        {:noise_type=>"busStop", :description=>"1 Bus Stop(s) on 5th Ave"},
+        {:noise_type=>"freeway", :description=>"1 Nearby Freeway(s)"},
+        {:noise_type=>"busStop", :description=>"2 Bus Stop(s) on 4th Ave"},
+        {:noise_type=>"construction", :description=>"foobar"},
+        {:noise_type=>"construction", :description=>"dinobaz"},
+        {:noise_type=>"freeway", :description=>"2 Nearby Freeway(s)"}
+      ]
+      expect(result).to eq(finished_array)
     end
   end
 

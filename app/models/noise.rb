@@ -28,10 +28,23 @@ class Noise < ActiveRecord::Base
   end
 
   def self.group_noises(array)
-    groups = array.group(:noise_type, :description).count
-    puts groups
+    activerecordify = Noise.where(id: array.map(&:id))
+    groups = activerecordify.group(:noise_type, :description).count    
 
-    return array
+    groups.map do |k, v|
+      hash = { noise_type: k[0] }
+
+      if k[0] == "busStop"
+        hash[:description] = "#{v} Bus Stop(s) on #{k[1]}"
+        hash
+      elsif k[0] == "freeway"
+        hash[:description] = "#{v} Nearby Freeway(s)"
+        hash
+      else
+        hash[:description] = k[1]
+        hash
+      end
+    end
   end
 
   def self.get_decibel_total(origin_lat, origin_lon, array_of_noises)
