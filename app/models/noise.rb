@@ -27,6 +27,13 @@ class Noise < ActiveRecord::Base
     Noise.near([latitude, longitude], 0.13)
   end
 
+  def self.group_noises(array)
+    groups = array.group(:noise_type, :description).count
+    puts groups
+
+    return array
+  end
+
   def self.get_decibel_total(origin_lat, origin_lon, array_of_noises)
     noise_decibels = array_of_noises.map do |noise|
       distance = Geocoder::Calculations.distance_between([origin_lat, origin_lon], [noise.lat, noise.lon])

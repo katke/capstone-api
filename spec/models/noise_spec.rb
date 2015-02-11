@@ -64,7 +64,7 @@ describe Noise do
   end
 
   describe "#nearby_noises" do
-    let!(:result)  { Noise.nearby_noises(47.9, -122.9) }
+    let!(:result) { Noise.nearby_noises(47.9, -122.9) }
 
     it "returns nearby locations" do
       expect(result).to eq(in_range_noises)
@@ -72,6 +72,32 @@ describe Noise do
 
     it "does not include location that is .004 degrees away" do
       expect(result).not_to eq(:out_of_range_noise)
+    end
+  end
+
+  describe "#group_noises" do
+    let!(:array) { [
+      create(:noise, noise_type: "busStop", description: "4th Ave"),
+      create(:noise, noise_type: "busStop", description: "4th Ave"),
+      create(:noise, noise_type: "busStop", description: "5th Ave"),
+      create(:noise, noise_type: "freeway", description: "005"),
+      create(:noise, noise_type: "freeway", description: "005"),
+      create(:noise, noise_type: "freeway", description: "099"),
+      create(:noise, noise_type: "construction", description: "foobar"),
+      create(:noise, noise_type: "construction", description: "dinobaz")
+    ] }
+    let!(:result) { Noise.group_noises(array) }
+
+    it "returns array of noise objects" do
+      expect(result.first.class).to eq(Noise)
+    end
+
+    it "groups busStops by street address" do
+      all_bus_stops = result.find_all { |i|  i.noise_type == "busStop" }
+      # 4th_bus_stops = result.find_all { |i|  i.noise_type == "busStop" && i.description == "4th Ave" }
+      # 5th_bus_stops = result.find_all { |i|  i.noise_type == "busStop" && i.description == "5th Ave" }
+
+      expect(all_bus_stops.length).to eq(2)
     end
   end
 
