@@ -8,7 +8,7 @@ class NoisesController < ApplicationController
   def score
     @latitude = params["latitude"].to_f
     @longitude = params["longitude"].to_f
-    if @latitude == 0 || @longitude == 0 || !Noise.in_seattle?(@latitude, @longitude)
+    if !Noise.in_seattle?(@latitude, @longitude)
       render json: "No results", status: 400
     else
       results = Noise.get_score(@latitude, @longitude) 

@@ -29,7 +29,7 @@ def stationary_locations(noise_type, file, decibel, reach, seasonal)
     common_name = r["common_name"]
     common_name = common_name.strip
     noise = Noise.create(
-      description: "common_name",
+      description: common_name,
       noise_type: noise_type,
       lat: r["latitude"],
       lon: r["longitude"],
@@ -176,58 +176,44 @@ puts "Clearing Database..."
 Noise.destroy_all
 Perishable.destroy_all
 
-# Stationary Noise Hashes!
-regular_stationary = {
-  "fireStation" => { file: "znfv-apni", decibel: 125, reach: 4593, seasonal: false },
-  "school" => { file: "pmap-kbvr", decibel: 70, reach: 10, seasonal: true },
-  "college" => { file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true },
-  "trolley" => { file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false },
-  "hospital" => { file: "points/custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
-  "bar" => { file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false },
-  "heliportOrAirport" => { file: "points/custom/heliports", decibel: 100, reach: 3117, seasonal: false },
-  "stadium" => { file: "points/custom/stadiums", decibel: 100, reach: 263, seasonal: true }
+# Hash of Noises to Create!
+noises_to_create = {
+  "fireStation" =>       { file_type: "regular_stationary", file: "znfv-apni", decibel: 125, reach: 4593, seasonal: false },
+  "school" =>            { file_type: "regular_stationary", file: "pmap-kbvr", decibel: 70, reach: 10, seasonal: true },
+  "college" =>           { file_type: "regular_stationary", file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true },
+  "trolley" =>           { file_type: "regular_stationary", file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false },
+  "hospital" =>          { file_type: "regular_stationary", file: "points/custom/seattle-er", decibel: 125, reach: 4593, seasonal: false },
+  "bar" =>               { file_type: "regular_stationary", file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false },
+  "heliportOrAirport" => { file_type: "regular_stationary", file: "points/custom/heliports", decibel: 100, reach: 3117, seasonal: false },
+  "stadium" =>           { file_type: "regular_stationary", file: "points/custom/stadiums", decibel: 100, reach: 263, seasonal: true },
+  "policeStation" =>     { file_type: "gis_stationary", file: "points/gis/police", decibel: 125, reach: 4593, seasonal: false },
+  "busStop" =>           { file_type: "gis_stationary", file: "points/gis/bus_stops", decibel: 74, reach: 16, seasonal: false },
+  "dump" =>              { file_type: "gis_stationary", file: "points/gis/solid_waste", decibel: 93, reach: 151, seasonal: false },
+  "transitCenter" =>     { file_type: "gis_stationary", file: "points/gis/transit_centers", decibel: 74, reach: 16, seasonal: false },
+  "construction" =>      { file_type: "stationary_perishable", file: "9yds-qdb3", decibel: 93, reach: 151, seasonal: false },
+  "demolition" =>        { file_type: "stationary_perishable", file: "j6ng-5q2r", decibel: 100, reach: 263, seasonal: false },
+  "noiseComplaints" =>   { file_type: "stationary_noise_complaints", file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false },
+  "freeway" =>           { file_type: "gis_roads", file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute" },
+  # "railroad" =>        { file_type: "gis_roads", file: "lines/railroads", decibel: 80, reach: 30, description: "Name"} ## Data seems inacurrate?
 }
 
-gis_stationary = {
-  "policeStation" => { file: "points/gis/police", decibel: 125, reach: 4593, seasonal: false },
-  "busStop" => { file: "points/gis/bus_stops", decibel: 74, reach: 16, seasonal: false },
-  "dump" => { file: "points/gis/solid_waste", decibel: 93, reach: 151, seasonal: false },
-  "transitCenter" => { file: "points/gis/transit_centers", decibel: 74, reach: 16, seasonal: false }
-}
-
-stationary_perishable = {
-  "construction" => { file: "9yds-qdb3", decibel: 93, reach: 151, seasonal: false },
-  "demolition" => { file: "j6ng-5q2r", decibel: 100, reach: 263, seasonal: false }
-}
-
-stationary_noise_complaints = {
-  "noiseComplaints" => { file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false }
-}
-
-gis_roads = {
-  "freeway" => { file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute" },
-  # "railroad" => { file: "lines/railroads", decibel: 80, reach: 30, description: "Name"} ## Data seems inacurrate?
-}
-
-# Create Stationary Noises!
-regular_stationary.each do |k, v|
-  stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+# Create Noises!
+noises_to_create.each do |k, v|
+  case v[:file_type]
+  when "regular_stationary"
+    stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+  when "gis_stationary"
+    gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+  when "stationary_perishable"
+    perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+  when "stationary_noise_complaints"
+    noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
+  when "gis_roads"
+    gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description])
+  else
+    puts "?"
+  end
 end
 
-stationary_perishable.each do |k, v|
-  perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-end
-
-stationary_noise_complaints.each do |k, v|
-  noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-end
-
-gis_stationary.each do |k, v|
-  gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-end
-
-gis_roads.each do |k, v|
-  gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description])
-end
-
+# Everything's Done!
 puts "Seeding Complete! #{Noise.count} Noises in Database! :)"

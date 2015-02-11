@@ -3,8 +3,8 @@ class Noise < ActiveRecord::Base
 
   def self.get_score(latitude, longitude)
     results = {}
-    results[:noises] = nearby_noises(latitude, longitude)
-    total = get_decibel_total(latitude, longitude, results[:noises])
+    nearby_noises_array = nearby_noises(latitude, longitude)
+    total = get_decibel_total(latitude, longitude, nearby_noises_array)
 
     if total >= 160
       results[:score] = "F"
@@ -20,11 +20,32 @@ class Noise < ActiveRecord::Base
       results[:score] = "A"
     end
 
+    results[:noises]    = group_noises(nearby_noises_array)
     return results
   end
 
   def self.nearby_noises(latitude, longitude)
     Noise.near([latitude, longitude], 0.13)
+  end
+
+  def self.group_noises(array)
+    activerecordify = Noise.where(id: array.map(&:id))
+    groups = activerecordify.group(:noise_type, :description).count    
+
+    groups.map do |k, v|
+      hash = { noise_type: k[0] }
+
+      if k[0] == "transit"
+        hash[:description] = "#{v} #{k[1]}"
+        hash
+      elsif k[0] == "freeway"
+        hash[:description] = "#{v} Nearby Freeway(s)"
+        hash
+      else
+        hash[:description] = k[1]
+        hash
+      end
+    end
   end
 
   def self.get_decibel_total(origin_lat, origin_lon, array_of_noises)
