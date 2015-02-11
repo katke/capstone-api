@@ -77,9 +77,9 @@ describe Noise do
 
   describe "#group_noises" do
     let!(:array) { [
-      create(:noise, noise_type: "busStop", description: "4th Ave"),
-      create(:noise, noise_type: "busStop", description: "4th Ave"),
-      create(:noise, noise_type: "busStop", description: "5th Ave"),
+      create(:noise, noise_type: "transit", description: "Bus Stop - 4th Ave"),
+      create(:noise, noise_type: "transit", description: "Bus Stop - 4th Ave"),
+      create(:noise, noise_type: "transit", description: "Bus Stop - 5th Ave"),
       create(:noise, noise_type: "freeway", description: "005"),
       create(:noise, noise_type: "freeway", description: "005"),
       create(:noise, noise_type: "freeway", description: "099"),
@@ -88,8 +88,8 @@ describe Noise do
     ] }
     let!(:result) { Noise.group_noises(array) }
 
-    it "groups busStops by street address" do
-      all_bus_stops = result.find_all { |i| i[:noise_type] == "busStop" }
+    it "groups transit by street address" do
+      all_bus_stops = result.find_all { |i| i[:noise_type] == "transit" }
       expect(all_bus_stops.length).to eq(2)
     end
 
@@ -100,9 +100,9 @@ describe Noise do
 
     it "formats as expected" do
       finished_array = [
-        {:noise_type=>"busStop", :description=>"1 Bus Stop(s) on 5th Ave"},
+        {:noise_type=>"transit", :description=>"2 Bus Stop - 4th Ave"},
+        {:noise_type=>"transit", :description=>"1 Bus Stop - 5th Ave"},
         {:noise_type=>"freeway", :description=>"1 Nearby Freeway(s)"},
-        {:noise_type=>"busStop", :description=>"2 Bus Stop(s) on 4th Ave"},
         {:noise_type=>"construction", :description=>"foobar"},
         {:noise_type=>"construction", :description=>"dinobaz"},
         {:noise_type=>"freeway", :description=>"2 Nearby Freeway(s)"}

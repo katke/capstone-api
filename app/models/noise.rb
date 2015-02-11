@@ -35,8 +35,8 @@ class Noise < ActiveRecord::Base
     groups.map do |k, v|
       hash = { noise_type: k[0] }
 
-      if k[0] == "busStop"
-        hash[:description] = "#{v} Bus Stop(s) on #{k[1]}"
+      if k[0] == "transit"
+        hash[:description] = "#{v} #{k[1]}"
         hash
       elsif k[0] == "freeway"
         hash[:description] = "#{v} Nearby Freeway(s)"
