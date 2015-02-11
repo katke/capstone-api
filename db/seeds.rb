@@ -199,16 +199,19 @@ noises_to_create = {
 
 # Create Noises!
 noises_to_create.each do |k, v|
-  if v[:file_type] == "regular_stationary"
+  case v[:file_type]
+  when "regular_stationary"
     stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-  elsif v[:file_type] == "gis_stationary"
+  when "gis_stationary"
     gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-  elsif v[:file_type] == "stationary_perishable"
+  when "stationary_perishable"
     perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-  elsif v[:file_type] == "stationary_noise_complaints"
+  when "stationary_noise_complaints"
     noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal])
-  elsif v[:file_type] == "gis_roads"
+  when "gis_roads"
     gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description])
+  else
+    puts "?"
   end
 end
 
