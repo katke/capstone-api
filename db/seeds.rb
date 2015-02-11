@@ -29,7 +29,7 @@ def stationary_locations(noise_type, file, decibel, reach, seasonal)
     common_name = r["common_name"]
     common_name = common_name.strip
     noise = Noise.create(
-      description: "common_name",
+      description: common_name,
       noise_type: noise_type,
       lat: r["latitude"],
       lon: r["longitude"],
