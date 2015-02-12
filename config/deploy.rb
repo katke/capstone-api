@@ -8,6 +8,8 @@ set :use_sudo, false
 
 set :deploy_to, '/var/www/capstone-api'
 
+require "whenever/capistrano"
+
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 

@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   end
 
   root 'home#index'
+  get '/refresh_data', to: "noises#refresh_data", as: :update_data
 end

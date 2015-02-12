@@ -29,6 +29,7 @@ group :development do
 end
 
 gem 'therubyracer', platforms: :ruby
+gem 'whenever', :require => false
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

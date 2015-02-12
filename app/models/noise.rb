@@ -30,7 +30,7 @@ class Noise < ActiveRecord::Base
 
   def self.group_noises(array)
     activerecordify = Noise.where(id: array.map(&:id))
-    groups = activerecordify.group(:noise_type, :description).count    
+    groups = activerecordify.group(:noise_type, :description).count
 
     groups.map do |k, v|
       hash = { noise_type: k[0] }
@@ -65,4 +65,10 @@ class Noise < ActiveRecord::Base
   rescue NoMethodError
     false
   end
+
+  # cron task to add new construction/demolition/noise complaint data, delete old data
+  def self.update_noise_types
+    
+  end
+
 end
