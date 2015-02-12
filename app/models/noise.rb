@@ -48,6 +48,14 @@ class Noise < ActiveRecord::Base
     end
   end
 
+  def self.get_descriptive_name(type, count)
+    "#{count} #{type.capitalize.pluralize(count)}"
+  end
+
+  # def self.get_icon
+    
+  # end
+
   def self.get_decibel_total(origin_lat, origin_lon, array_of_noises)
     noise_decibels = array_of_noises.map do |noise|
       distance = Geocoder::Calculations.distance_between([origin_lat, origin_lon], [noise.lat, noise.lon])

@@ -108,6 +108,24 @@ describe Noise do
     end
   end
 
+  describe "#get_descriptive_name" do
+
+    it "returns singular freeway name" do
+      result = Noise.get_descriptive_name('freeway', 1)
+      expect(result).to eq("1 Freeway")
+    end
+
+    it "returns plural freeway name" do
+      result = Noise.get_descriptive_name('freeway', 2)
+      expect(result).to eq("2 Freeways")
+    end
+
+  end
+  
+  # describe "#get_icon" do
+
+  # end
+
   describe "#get_decibel_total" do
 
     it "returns the total number of decibels" do
