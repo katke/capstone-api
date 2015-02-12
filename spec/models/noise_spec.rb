@@ -88,24 +88,21 @@ describe Noise do
     ] }
     let!(:result) { Noise.group_noises(array) }
 
-    it "groups transit by street address" do
+    it "groups transit" do
       all_bus_stops = result.find_all { |i| i[:noise_type] == "transit" }
-      expect(all_bus_stops.length).to eq(2)
+      expect(all_bus_stops.length).to eq(1)
     end
 
-    it "groups freeways by freeway number" do
+    it "groups freeways" do
       all_freeways = result.find_all { |i| i[:noise_type] == "freeway" }
-      expect(all_freeways.length).to eq(2)
+      expect(all_freeways.length).to eq(1)
     end
 
     it "formats as expected" do
       finished_array = [
-        {:noise_type=>"transit", :description=>"2 Bus Stop - 4th Ave"},
-        {:noise_type=>"transit", :description=>"1 Bus Stop - 5th Ave"},
-        {:noise_type=>"freeway", :description=>"1 Nearby Freeway(s)"},
-        {:noise_type=>"construction", :description=>"foobar"},
-        {:noise_type=>"construction", :description=>"dinobaz"},
-        {:noise_type=>"freeway", :description=>"2 Nearby Freeway(s)"}
+        {:noise_type=>"transit", :count=>3, :details=>nil},
+        {:noise_type=>"construction", :count=>2, :details=>["foobar", "dinobaz"]},
+        {:noise_type=>"freeway", :count=>2, :details=>nil}
       ]
       expect(result).to eq(finished_array)
     end

@@ -56,7 +56,7 @@ RSpec.describe NoisesController, :type => :controller do
       end
 
       it "returns array of nearby locations" do
-        final_response = [{:noise_type=>"busStop", :description=>"Foobar"}]
+        final_response = [{noise_type: "busStop", count: 2, details: nil}]
         expect(assigns(:nearby_noises)).to eq final_response
       end
     end
