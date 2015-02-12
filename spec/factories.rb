@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :noise do
     description "Foobar"
-    noise_type "busStop"
+    noise_type "transit"
     lat 47.9
     lon -122.901
     decibel 70

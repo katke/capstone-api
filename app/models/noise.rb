@@ -20,7 +20,7 @@ class Noise < ActiveRecord::Base
       results[:score] = "A"
     end
 
-    results[:noises] = group_noises(nearby_noises_array)
+    results[:noises] = group_noises(nearby_noises_array) 
     return results
   end
 
@@ -29,28 +29,29 @@ class Noise < ActiveRecord::Base
   end
 
   def self.group_noises(array)
-    activerecordify = Noise.where(id: array.map(&:id))
-    groups = activerecordify.group(:noise_type).count
+    if array.any?
+      activerecordify = Noise.where(id: array.map(&:id))
+      groups = activerecordify.group(:noise_type).count
 
-    groups.map do |k, v|
-      hash = { noise_type: k, count: v, details: nil }
-      # hash = { noise_type: get_descriptive_name(k, v), details: nil, icon: get_icon(k) }
+      groups.map do |k, v|
+        hash = { noise_type: get_descriptive_name(k, v), icon: get_icon(k), details: nil }
 
-      if k == "construction" || k == "demolition" || k == "noiseComplaints"
-        detailed_noises = activerecordify.where("noise_type = 'construction' OR noise_type = 'demolition' OR noise_type = 'noiseComplaints'")
-        long_descriptions = detailed_noises.map(&:description)
-        # long_descriptions = detailed_noises.map do |i|
-        #   format_description(i.description)
-        # end
+        if k == "construction" || k == "demolition" || k == "noiseComplaints"
+          detailed_noises = activerecordify.where("noise_type = 'construction' OR noise_type = 'demolition' OR noise_type = 'noiseComplaints'")
+          long_descriptions = detailed_noises.map do |i|
+            format_description(i.description)
+          end
 
-        hash[:details] = long_descriptions
-      elsif k == "freeway"
-        freeway_count = activerecordify.where(noise_type: "freeway").group(:description).count.keys.length
-        hash[:count] = freeway_count
-        # hash[:noise_type] = get_descriptive_name(k, freeway_count)
+          hash[:details] = long_descriptions
+        elsif k == "freeway"
+          freeway_count = activerecordify.where(noise_type: "freeway").group(:description).count.keys.length
+          hash[:noise_type] = get_descriptive_name(k, freeway_count)
+        end
+
+        hash
       end
-
-      hash
+    else
+      nil
     end
   end
 
