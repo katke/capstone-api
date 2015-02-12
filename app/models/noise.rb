@@ -119,13 +119,11 @@ class Noise < ActiveRecord::Base
     false
   end
 
-  # cron task to add new construction/demolition/noise complaint data, delete old data
+  # cron task method to add new construction/demolition/noise complaint data, delete old data daily
   def self.refresh_data
     UpdateData.remove_existing_records
-    
-    # UpdateData.test
-
-
+    UpdateData.repull_data
+    puts "Construction, demolition, and noise complaints have been updated!"
   end
 
 end
