@@ -35,15 +35,13 @@ class Noise < ActiveRecord::Base
     groups.map do |k, v|
       hash = { noise_type: k, count: v, details: nil }
 
-      if k == "freeway"
-        freeway_count = activerecordify.where(noise_type: "freeway").group(:description).count.keys.length
-        hash[:count] = freeway_count
-      elsif k == "construction" || k = "demolition" || k = "noiseComplaints"
+      if k == "construction" || k == "demolition" || k == "noiseComplaints"
         detailed_noises = activerecordify.where("noise_type = 'construction' OR noise_type = 'demolition' OR noise_type = 'noiseComplaints'")
         long_descriptions = detailed_noises.map(&:description)
         hash[:details] = long_descriptions
-      else
-        hash[:details] = nil
+      elsif k == "freeway"
+        freeway_count = activerecordify.where(noise_type: "freeway").group(:description).count.keys.length
+        hash[:count] = freeway_count
       end
 
       hash
