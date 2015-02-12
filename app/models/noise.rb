@@ -34,14 +34,20 @@ class Noise < ActiveRecord::Base
 
     groups.map do |k, v|
       hash = { noise_type: k, count: v, details: nil }
+      # hash = { noise_type: get_descriptive_name(k, v), details: nil }
 
       if k == "construction" || k == "demolition" || k == "noiseComplaints"
         detailed_noises = activerecordify.where("noise_type = 'construction' OR noise_type = 'demolition' OR noise_type = 'noiseComplaints'")
         long_descriptions = detailed_noises.map(&:description)
+        # long_descriptions = detailed_noises.map do |i|
+        #   format_description(i.description)
+        # end
+
         hash[:details] = long_descriptions
       elsif k == "freeway"
         freeway_count = activerecordify.where(noise_type: "freeway").group(:description).count.keys.length
         hash[:count] = freeway_count
+        # hash[:noise_type] = get_descriptive_name(k, freeway_count)
       end
 
       hash
@@ -49,7 +55,28 @@ class Noise < ActiveRecord::Base
   end
 
   def self.get_descriptive_name(type, count)
-    "#{count} #{type.capitalize.pluralize(count)}"
+    names_hash = {
+      "fireStation" => "Fire Station",
+      "school" => "School",
+      "college" => "College",
+      "transit" => "Transit Stop",
+      "hospital" => "Hospital",
+      "bar" => "Bar",
+      "heliportOrAirport" => "Heliport/Airport",
+      "stadium" => "Stadium",
+      "policeStation" => "Police Station",
+      "dump" => "Dump",
+      "construction" => "Construction",
+      "demolition" => "Demolition",
+      "noiseComplaints" => "Noise Complaint",
+      "freeway" => "Freeway"
+    }
+
+    "#{count} #{names_hash[type].pluralize(count)}"
+  end
+
+  def self.format_description(string)
+    string.capitalize
   end
 
   # def self.get_icon

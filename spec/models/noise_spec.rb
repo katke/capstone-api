@@ -120,6 +120,23 @@ describe Noise do
       expect(result).to eq("2 Freeways")
     end
 
+    it "returns singular transit name" do
+      result = Noise.get_descriptive_name('transit', 1)
+      expect(result).to eq("1 Transit Stop")
+    end 
+
+    it "returns plural transit name" do
+      result = Noise.get_descriptive_name('transit', 2)
+      expect(result).to eq("2 Transit Stops")
+    end
+  end
+
+  describe "#format_description" do
+
+    it "returns formatted description" do
+      result = Noise.format_description("NOISE - DISTURBANCE (PARTY, ETC)")
+      expect(result).to eq("Noise - disturbance (party, etc)")
+    end
   end
   
   # describe "#get_icon" do
