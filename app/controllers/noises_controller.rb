@@ -17,4 +17,10 @@ class NoisesController < ApplicationController
     end
   end
 
+  def coordinates
+    @address = params[:address]
+    @coordinates = [47.609998, -122.334362]
+    
+    render json: @coordinates, status: 200
+  end
 end
