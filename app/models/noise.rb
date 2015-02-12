@@ -6,13 +6,13 @@ class Noise < ActiveRecord::Base
     nearby_noises_array = nearby_noises(latitude, longitude)
     total = get_decibel_total(latitude, longitude, nearby_noises_array)
 
-    if total >= 160
+    if total >= 140
       results[:score] = "F"
-    elsif total >= 90
-      results[:score] = "E"
     elsif total >= 80
-      results[:score] = "D"
+      results[:score] = "E"
     elsif total >= 70
+      results[:score] = "D"
+    elsif total >= 65
       results[:score] = "C"
     elsif total >= 60
       results[:score] = "B"
