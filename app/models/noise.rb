@@ -39,7 +39,7 @@ class Noise < ActiveRecord::Base
         hash[:description] = "#{v} #{k[1]}"
         hash
       elsif k[0] == "freeway"
-        hash[:description] = "#{v} Nearby Freeway(s)"
+        hash[:description] = "Nearby Freeway(s)"
         hash
       else
         hash[:description] = k[1]
