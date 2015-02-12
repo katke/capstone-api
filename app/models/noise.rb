@@ -20,7 +20,7 @@ class Noise < ActiveRecord::Base
       results[:score] = "A"
     end
 
-    results[:noises]    = group_noises(nearby_noises_array)
+    results[:noises] = group_noises(nearby_noises_array)
     return results
   end
 
@@ -30,21 +30,23 @@ class Noise < ActiveRecord::Base
 
   def self.group_noises(array)
     activerecordify = Noise.where(id: array.map(&:id))
-    groups = activerecordify.group(:noise_type, :description).count    
+    groups = activerecordify.group(:noise_type).count
 
     groups.map do |k, v|
-      hash = { noise_type: k[0] }
+      hash = { noise_type: k, count: v, details: nil }
 
-      if k[0] == "transit"
-        hash[:description] = "#{v} #{k[1]}"
-        hash
-      elsif k[0] == "freeway"
-        hash[:description] = "Nearby Freeway(s)"
-        hash
+      if k == "freeway"
+        freeway_count = activerecordify.where(noise_type: "freeway").group(:description).count.keys.length
+        hash[:count] = freeway_count
+      elsif k == "construction" || k = "demolition" || k = "noiseComplaints"
+        detailed_noises = activerecordify.where("noise_type = 'construction' OR noise_type = 'demolition' OR noise_type = 'noiseComplaints'")
+        long_descriptions = detailed_noises.map(&:description)
+        hash[:details] = long_descriptions
       else
-        hash[:description] = k[1]
-        hash
+        hash[:details] = nil
       end
+
+      hash
     end
   end
 
