@@ -8,6 +8,7 @@ set :use_sudo, false
 
 set :deploy_to, '/var/www/capstone-api'
 
+set :rake, "RAILS_ENV=production bundle exec rake update_data"
 require "whenever/capistrano"
 
 # Default branch is :master
