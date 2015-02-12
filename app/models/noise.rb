@@ -119,49 +119,13 @@ class Noise < ActiveRecord::Base
     false
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   # cron task to add new construction/demolition/noise complaint data, delete old data
   def self.refresh_data
-    ActionController::Base.helpers.test
+    UpdateData.remove_existing_records
+    
+    # UpdateData.test
+
+
   end
 
 end
