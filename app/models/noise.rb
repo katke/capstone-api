@@ -34,7 +34,7 @@ class Noise < ActiveRecord::Base
 
     groups.map do |k, v|
       hash = { noise_type: k, count: v, details: nil }
-      # hash = { noise_type: get_descriptive_name(k, v), details: nil }
+      # hash = { noise_type: get_descriptive_name(k, v), details: nil, icon: get_icon(k) }
 
       if k == "construction" || k == "demolition" || k == "noiseComplaints"
         detailed_noises = activerecordify.where("noise_type = 'construction' OR noise_type = 'demolition' OR noise_type = 'noiseComplaints'")
@@ -79,9 +79,26 @@ class Noise < ActiveRecord::Base
     string.capitalize
   end
 
-  # def self.get_icon
-    
-  # end
+  def self.get_icon(type)
+    icons_hash = {
+      "fireStation" => "fire",
+      "school" => "book",
+      "college" => "pencil",
+      "transit" => "road",
+      "hospital" => "plus-sign",
+      "bar" => "glass",
+      "heliportOrAirport" => "plane",
+      "stadium" => "volume-up",
+      "policeStation" => "bullhorn",
+      "dump" => "trash",
+      "construction" => "wrench",
+      "demolition" => "wrench",
+      "noiseComplaints" => "phone-alt",
+      "freeway" => "road"
+    }
+
+    icons_hash[type]
+  end
 
   def self.get_decibel_total(origin_lat, origin_lon, array_of_noises)
     noise_decibels = array_of_noises.map do |noise|

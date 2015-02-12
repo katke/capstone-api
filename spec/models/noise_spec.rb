@@ -139,9 +139,13 @@ describe Noise do
     end
   end
   
-  # describe "#get_icon" do
+  describe "#get_icon" do
 
-  # end
+    it "returns associated icon" do
+      result = Noise.get_icon("freeway")
+      expect(result).to eq("road")
+    end
+  end
 
   describe "#get_decibel_total" do
 
