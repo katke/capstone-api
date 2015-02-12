@@ -88,26 +88,62 @@ describe Noise do
     ] }
     let!(:result) { Noise.group_noises(array) }
 
-    it "groups transit by street address" do
-      all_bus_stops = result.find_all { |i| i[:noise_type] == "transit" }
-      expect(all_bus_stops.length).to eq(2)
+    it "groups transit" do
+      all_bus_stops = result.find_all { |i| i[:noise_type].match(/transit/i) }
+      expect(all_bus_stops.length).to eq(1)
     end
 
-    it "groups freeways by freeway number" do
-      all_freeways = result.find_all { |i| i[:noise_type] == "freeway" }
-      expect(all_freeways.length).to eq(2)
+    it "groups freeways" do
+      all_freeways = result.find_all { |i| i[:noise_type].match(/freeway/i) }
+      expect(all_freeways.length).to eq(1)
     end
 
     it "formats as expected" do
       finished_array = [
-        {:noise_type=>"transit", :description=>"2 Bus Stop - 4th Ave"},
-        {:noise_type=>"transit", :description=>"1 Bus Stop - 5th Ave"},
-        {:noise_type=>"freeway", :description=>"1 Nearby Freeway(s)"},
-        {:noise_type=>"construction", :description=>"foobar"},
-        {:noise_type=>"construction", :description=>"dinobaz"},
-        {:noise_type=>"freeway", :description=>"2 Nearby Freeway(s)"}
+        {:noise_type=>"3 Transit Stops", :icon=>"road", :details=>nil},
+        {:noise_type=>"2 Constructions", :icon=>"wrench", :details=>["Foobar", "Dinobaz"]},
+        {:noise_type=>"2 Freeways", :icon=>"road", :details=>nil}
       ]
       expect(result).to eq(finished_array)
+    end
+  end
+
+  describe "#get_descriptive_name" do
+
+    it "returns singular freeway name" do
+      result = Noise.get_descriptive_name('freeway', 1)
+      expect(result).to eq("1 Freeway")
+    end
+
+    it "returns plural freeway name" do
+      result = Noise.get_descriptive_name('freeway', 2)
+      expect(result).to eq("2 Freeways")
+    end
+
+    it "returns singular transit name" do
+      result = Noise.get_descriptive_name('transit', 1)
+      expect(result).to eq("1 Transit Stop")
+    end 
+
+    it "returns plural transit name" do
+      result = Noise.get_descriptive_name('transit', 2)
+      expect(result).to eq("2 Transit Stops")
+    end
+  end
+
+  describe "#format_description" do
+
+    it "returns formatted description" do
+      result = Noise.format_description("NOISE - DISTURBANCE (PARTY, ETC)")
+      expect(result).to eq("Noise - disturbance (party, etc)")
+    end
+  end
+  
+  describe "#get_icon" do
+
+    it "returns associated icon" do
+      result = Noise.get_icon("freeway")
+      expect(result).to eq("road")
     end
   end
 
