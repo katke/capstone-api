@@ -20,7 +20,7 @@ class Noise < ActiveRecord::Base
       results[:score] = "A"
     end
 
-    results[:noises] = group_noises(nearby_noises_array) 
+    results[:noises] = group_noises(nearby_noises_array)
     return results
   end
 
@@ -118,4 +118,12 @@ class Noise < ActiveRecord::Base
   rescue NoMethodError
     false
   end
+
+  # cron task method to add new construction/demolition/noise complaint data, delete old data daily
+  def self.refresh_data
+    UpdateData.remove_existing_records
+    UpdateData.repull_data
+    puts "Construction, demolition, and noise complaints have been updated!"
+  end
+
 end

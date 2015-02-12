@@ -11,7 +11,7 @@ class NoisesController < ApplicationController
     if !Noise.in_seattle?(@latitude, @longitude)
       render json: "No results", status: 400
     else
-      results = Noise.get_score(@latitude, @longitude) 
+      results = Noise.get_score(@latitude, @longitude)
       @grade = results[:score]
       @nearby_noises = results[:noises]
     end
