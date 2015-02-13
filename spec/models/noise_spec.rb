@@ -172,4 +172,12 @@ describe Noise do
       expect(result).to eq false
     end
   end
+
+  describe "#get_coordinates" do
+    let!(:result) { Noise.get_coordinates("500 Union St") }
+
+    it "returns coordinates for request" do
+      expect(result).to eq({ "lat" => 47.6099983, "lng" => -122.3343625 })
+    end
+  end
 end

@@ -19,8 +19,8 @@ class NoisesController < ApplicationController
 
   def coordinates
     @address = params[:address]
-    @coordinates = [47.609998, -122.334362]
-    
+    @coordinates = Noise.get_coordinates(@address)
+
     render json: @coordinates, status: 200
   end
 end

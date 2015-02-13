@@ -91,7 +91,7 @@ RSpec.describe NoisesController, :type => :controller do
       end
 
       it "returns coordinates" do
-        expect(assigns(:coordinates)).to eq([47.609998, -122.334362])
+        expect(assigns(:coordinates)).to eq({ "lat" => 47.6099983, "lng" => -122.3343625 })
       end
     end
 
