@@ -126,4 +126,11 @@ class Noise < ActiveRecord::Base
     puts "Construction, demolition, and noise complaints have been updated!"
   end
 
+  def self.get_coordinates(address)
+    clean_address = address.gsub(/ /, "+")
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{clean_address},Seattle,WA&key=#{ENV['GOOGLE_API_KEY']}"
+    response = HTTParty.get(url).parsed_response
+    
+    response["results"][0]["geometry"]["location"]
+  end
 end

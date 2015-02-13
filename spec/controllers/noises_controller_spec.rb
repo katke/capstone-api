@@ -75,4 +75,27 @@ RSpec.describe NoisesController, :type => :controller do
       end
     end
   end
+
+  describe "GET #coordinates" do
+    let!(:sample_address) { "500 Union St" }
+    let!(:response) { get :coordinates, { "address" => sample_address } }
+
+    context "valid user" do
+
+      it "is successful" do
+        expect(response.status).to eq 200
+      end
+
+      it "assigns @address" do
+        expect(assigns(:address)).to eq(sample_address)
+      end
+
+      it "returns coordinates" do
+        expect(assigns(:coordinates)).to eq({ "lat" => 47.6099983, "lng" => -122.3343625 })
+      end
+    end
+
+    # context "invalid user" do
+    # end
+  end
 end
