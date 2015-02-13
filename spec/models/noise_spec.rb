@@ -188,8 +188,9 @@ describe Noise do
         expect { Noise.get_coordinates("jawogijawovmnwauwu") }.to raise_error
       end
 
-      # it "throws appropriate error if address outside of Seattle" do
-      # end
+      it "throws appropriate error if address outside of Seattle" do
+        expect { Noise.get_coordinates("77 Massachusetts Avenue, Boston, MA") }.to raise_error
+      end
     end
   end
 end

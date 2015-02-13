@@ -134,7 +134,7 @@ class Noise < ActiveRecord::Base
     url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{clean_address},Seattle,WA&key=#{ENV['GOOGLE_API_KEY']}"
     response = HTTParty.get(url).parsed_response["results"][0]["geometry"]
     
-    if response["location_type"] == "APPROXIMATE"
+    if response["location_type"] == "APPROXIMATE" || !in_seattle?(response["location"]["lat"], response["location"]["lng"])
       raise InvalidAddress
     else
       response["location"]
