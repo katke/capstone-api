@@ -52,11 +52,11 @@ RSpec.describe NoisesController, :type => :controller do
       end
 
       it "returns a letter grade" do
-        expect(assigns(:grade)).to eq "F"
+        expect(assigns(:grade)).to eq "B"
       end
 
       it "returns array of nearby locations" do
-        final_response = [{noise_type: "2 Transit Stops", icon: "road", details: nil}]
+        final_response = [{noise_type: "1 Transit Stop", icon: "road", details: nil}]
         expect(assigns(:nearby_noises)).to eq final_response
       end
     end

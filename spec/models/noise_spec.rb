@@ -2,13 +2,13 @@ require 'rails_helper'
 
 describe Noise do
   # Can't remember—what is happening in the first create(:noise)
-  let!(:in_range_noises) { [create(:noise), create(:noise, lat: 47.88, lon: -122.9, decibel: 600)] }
+  let!(:in_range_noises) { [create(:noise, lat: 47.9, lon: -122.9, decibel: 600), create(:noise)] }
   let!(:out_of_range_noise) { create(:noise, lat: 47.904, lon: -122.904) }
 
   describe "#get_score" do
 
     context "F Score" do
-      let!(:result) { Noise.get_score(47.88, -122.9) }
+      let!(:result) { Noise.get_score(47.9, -122.9) }
 
       it "returns a letter score" do
         expect(result[:score]).to match(/[A-F]/)
@@ -152,7 +152,7 @@ describe Noise do
 
     it "returns the total number of decibels" do
       result = Noise.get_decibel_total(47.9, -122.9, in_range_noises)
-      expect(result).to eq 665.7154345421617
+      expect(result).to eq 669.861033988969
     end
   end
 
