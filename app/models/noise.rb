@@ -138,7 +138,7 @@ class Noise < ActiveRecord::Base
     first_location = first_result["location"]
     
     if response.empty? || first_result["location_type"] == "APPROXIMATE" || !in_seattle?(first_location["lat"], first_location["lng"])
-      raise InvalidAddressraise InvalidAddress
+      raise InvalidAddress
     else
       first_location
     end

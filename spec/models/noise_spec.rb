@@ -101,7 +101,7 @@ describe Noise do
     it "formats as expected" do
       finished_array = [
         {:noise_type=>"3 Transit Stops", :icon=>"road", :details=>nil},
-        {:noise_type=>"2 Constructions", :icon=>"wrench", :details=>["Foobar", "Dinobaz"]},
+        {:noise_type=>"2 Construction Sites", :icon=>"wrench", :details=>["Foobar", "Dinobaz"]},
         {:noise_type=>"2 Freeways", :icon=>"road", :details=>nil}
       ]
       expect(result).to eq(finished_array)
