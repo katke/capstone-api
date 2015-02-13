@@ -54,7 +54,7 @@ class Noise < ActiveRecord::Base
         hash
       end
     else
-      nil
+      [{ noise_type: "No significant noises within range!", icon: "heart", details: nil }]
     end
   end
 
