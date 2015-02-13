@@ -132,12 +132,15 @@ class Noise < ActiveRecord::Base
   def self.get_coordinates(address)
     clean_address = address.gsub(/ /, "+")
     url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{clean_address},Seattle,WA&key=#{ENV['GOOGLE_API_KEY']}"
-    response = HTTParty.get(url).parsed_response["results"][0]["geometry"]
+    response = HTTParty.get(url).parsed_response["results"]
     
-    if response["location_type"] == "APPROXIMATE" || !in_seattle?(response["location"]["lat"], response["location"]["lng"])
-      raise InvalidAddress
+    first_result = response[0]["geometry"]
+    first_location = first_result["location"]
+    
+    if response.empty? || first_result["location_type"] == "APPROXIMATE" || !in_seattle?(first_location["lat"], first_location["lng"])
+      raise InvalidAddressraise InvalidAddress
     else
-      response["location"]
+      first_location
     end
   end
 end
