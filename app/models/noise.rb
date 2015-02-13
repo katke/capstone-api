@@ -6,13 +6,13 @@ class Noise < ActiveRecord::Base
     nearby_noises_array = nearby_noises(latitude, longitude)
     total = get_decibel_total(latitude, longitude, nearby_noises_array)
 
-    if total >= 160
+    if total >= 600
       results[:score] = "F"
-    elsif total >= 90
+    elsif total >= 450
       results[:score] = "E"
-    elsif total >= 80
+    elsif total >= 325
       results[:score] = "D"
-    elsif total >= 70
+    elsif total >= 200
       results[:score] = "C"
     elsif total >= 60
       results[:score] = "B"
@@ -25,7 +25,7 @@ class Noise < ActiveRecord::Base
   end
 
   def self.nearby_noises(latitude, longitude)
-    Noise.near([latitude, longitude], 0.13)
+    Noise.near([latitude, longitude], 0.06)
   end
 
   def self.group_noises(array)
@@ -67,8 +67,8 @@ class Noise < ActiveRecord::Base
       "stadium" => "Stadium",
       "policeStation" => "Police Station",
       "dump" => "Dump",
-      "construction" => "Construction",
-      "demolition" => "Demolition",
+      "construction" => "Construction Site",
+      "demolition" => "Demolition Site",
       "noiseComplaints" => "Noise Complaint",
       "freeway" => "Freeway"
     }
