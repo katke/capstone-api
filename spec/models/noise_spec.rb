@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe Noise do
-  let!(:in_range_noises) { [create(:noise), create(:noise, lat: 47.901, lon: -122.9, decibel: 100)] }
+  # Can't remember—what is happening in the first create(:noise)
+  let!(:in_range_noises) { [create(:noise, lat: 47.9, lon: -122.9, decibel: 600), create(:noise)] }
   let!(:out_of_range_noise) { create(:noise, lat: 47.904, lon: -122.904) }
 
   describe "#get_score" do
@@ -19,7 +20,7 @@ describe Noise do
     end
 
     context "E Score" do
-      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 95) }
+      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 450) }
 
       it "returns a score of E" do
         result = Noise.get_score(25, 25)
@@ -28,16 +29,16 @@ describe Noise do
     end
 
     context "D Score" do
-      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 85) }
+      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 350) }
 
-      it "returns a score of E" do
+      it "returns a score of D" do
         result = Noise.get_score(25, 25)
         expect(result[:score]).to eq "D"
       end
     end
 
     context "C Score" do
-      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 75) }
+      let!(:sampleNoise) { create(:noise, lat: 25, lon: 25, decibel: 210) }
 
       it "returns a score of E" do
         result = Noise.get_score(25, 25)
@@ -123,7 +124,7 @@ describe Noise do
     it "returns singular transit name" do
       result = Noise.get_descriptive_name('transit', 1)
       expect(result).to eq("1 Transit Stop")
-    end 
+    end
 
     it "returns plural transit name" do
       result = Noise.get_descriptive_name('transit', 2)
@@ -138,7 +139,7 @@ describe Noise do
       expect(result).to eq("Noise - disturbance (party, etc)")
     end
   end
-  
+
   describe "#get_icon" do
 
     it "returns associated icon" do
@@ -151,7 +152,7 @@ describe Noise do
 
     it "returns the total number of decibels" do
       result = Noise.get_decibel_total(47.9, -122.9, in_range_noises)
-      expect(result).to eq 169.6537540166278
+      expect(result).to eq 669.861033988969
     end
   end
 
@@ -174,7 +175,7 @@ describe Noise do
   end
 
   describe "#get_coordinates" do
-    
+
     context "valid request" do
       let!(:result) { Noise.get_coordinates("500 Union St") }
 
