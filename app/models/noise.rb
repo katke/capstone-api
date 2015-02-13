@@ -1,6 +1,9 @@
 class Noise < ActiveRecord::Base
   geocoded_by :description, :latitude  => :lat, :longitude => :lon
 
+  class InvalidAddress < StandardError
+  end
+
   def self.get_score(latitude, longitude)
     results = {}
     nearby_noises_array = nearby_noises(latitude, longitude)
@@ -129,8 +132,12 @@ class Noise < ActiveRecord::Base
   def self.get_coordinates(address)
     clean_address = address.gsub(/ /, "+")
     url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{clean_address},Seattle,WA&key=#{ENV['GOOGLE_API_KEY']}"
-    response = HTTParty.get(url).parsed_response
+    response = HTTParty.get(url).parsed_response["results"][0]["geometry"]
     
-    response["results"][0]["geometry"]["location"]
+    if response["location_type"] == "APPROXIMATE"
+      raise InvalidAddress
+    else
+      response["location"]
+    end
   end
 end

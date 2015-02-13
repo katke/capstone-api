@@ -174,10 +174,22 @@ describe Noise do
   end
 
   describe "#get_coordinates" do
-    let!(:result) { Noise.get_coordinates("500 Union St") }
+    
+    context "valid request" do
+      let!(:result) { Noise.get_coordinates("500 Union St") }
 
-    it "returns coordinates for request" do
-      expect(result).to eq({ "lat" => 47.6099983, "lng" => -122.3343625 })
+      it "returns coordinates for request" do
+        expect(result).to eq({ "lat" => 47.6099983, "lng" => -122.3343625 })
+      end
+    end
+
+    context "invalid request" do
+      it "throws appropriate error if no address found" do
+        expect { Noise.get_coordinates("jawogijawovmnwauwu") }.to raise_error
+      end
+
+      # it "throws appropriate error if address outside of Seattle" do
+      # end
     end
   end
 end
