@@ -78,9 +78,14 @@ RSpec.describe NoisesController, :type => :controller do
 
   describe "GET #coordinates" do
 
+    let!(:sample_address) { "500 Union St" }
+
     context "valid user" do
+      before(:example) {
+        request.env["REMOTE_ADDR"] = "127.0.0.1"
+      }
+
       context "valid request" do
-        let!(:sample_address) { "500 Union St" }
         let!(:response) { get :coordinates, { "address" => sample_address } }
 
         it "is successful" do
@@ -104,7 +109,12 @@ RSpec.describe NoisesController, :type => :controller do
       end
     end
 
-    # context "invalid user" do
-    # end
+    context "invalid user" do
+
+      it "is unsuccessful" do
+        get :coordinates, { "address" => sample_address }
+        expect(response.status).to eq 401
+      end
+    end
   end
 end

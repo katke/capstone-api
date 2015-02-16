@@ -1,5 +1,6 @@
 class NoisesController < ApplicationController
   rescue_from Noise::InvalidAddress, with: :invalid_address_rescue
+  before_action :validate_ip, only: [:coordinates]
 
   def index
     @noises = Noise.select('id, noise_type, lat, lon, decibel, reach')
@@ -30,5 +31,12 @@ class NoisesController < ApplicationController
 
   def invalid_address_rescue
     render json: "Invalid Address", status: 400
+  end
+
+  def validate_ip
+    client_ip = request.env["REMOTE_ADDR"]
+    unless client_ip == ENV["ACCEPTED_IP"]
+      render json: "Unauthorized User", status: 401
+    end
   end
 end
