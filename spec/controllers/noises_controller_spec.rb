@@ -79,6 +79,10 @@ RSpec.describe NoisesController, :type => :controller do
   describe "GET #coordinates" do
 
     context "valid user" do
+      before(:example) {
+        request.env["REMOTE_ADDR"] = "127.0.0.1"
+      }
+
       context "valid request" do
         let!(:sample_address) { "500 Union St" }
         let!(:response) { get :coordinates, { "address" => sample_address } }
