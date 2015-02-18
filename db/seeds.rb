@@ -185,7 +185,7 @@ Perishable.destroy_all
 noises_to_create = {
   "fireStation" =>       { file_type: "regular_stationary", file: "znfv-apni", decibel: 125, reach: 4593, seasonal: false, display_reach: 12 },
   "school" =>            { file_type: "regular_stationary", file: "pmap-kbvr", decibel: 70, reach: 10, seasonal: true, display_reach: 10 },
-  "college" =>           { file_type: "regular_stationary", file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true, display_reach: 3 },
+  "college" =>           { file_type: "regular_stationary", file: "qawk-qmwr", decibel: 74, reach: 16, seasonal: true, display_reach: 15 },
   "trolley" =>           { file_type: "regular_stationary", file: "4qvq-uf9z", decibel: 65, reach: 6, seasonal: false, display_reach: 2 },
   "hospital" =>          { file_type: "regular_stationary", file: "points/custom/seattle-er", decibel: 125, reach: 4593, seasonal: false, display_reach: 12 },
   "bar" =>               { file_type: "regular_stationary", file: "points/custom/bar_geolocation", decibel: 70, reach: 10, seasonal: false, display_reach: 2 },
