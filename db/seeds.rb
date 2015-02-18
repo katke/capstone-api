@@ -41,6 +41,10 @@ def stationary_locations(noise_type, file, decibel, reach, seasonal, display_rea
 
     if noise.noise_type == "trolley"
       noise.update(description: "Trolley - #{common_name}", noise_type: "transit")
+    elsif noise.noise_type == "college"
+      name = noise.description
+      noise.update(display_reach: 55) if name == "University Of Washington"
+      noise.update(display_reach: 30) if name == "Seattle University"
     end
 
     print "."
