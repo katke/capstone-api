@@ -1,4 +1,4 @@
-set :output, "/../lib/cron/cron_log.log"
+set :output, "../lib/cron/cron_log.log"
 
 # every 1.day, :at => '3:30 am' do
 #   rake 'update_data'
@@ -6,4 +6,5 @@ set :output, "/../lib/cron/cron_log.log"
 
 every 30.minutes do
   rake 'update_data'
+  puts "Updated demolition, construction, 911 noise complaints!"
 end
