@@ -3,7 +3,7 @@ class NoisesController < ApplicationController
   before_action :validate_ip, only: [:coordinates]
 
   def index
-    @noises = Noise.select('id, noise_type, lat, lon, decibel, reach, display_reach')
+    @noises = Noise.select('id, noise_type, lat, lon, decibel, reach, display_reach, description')
     render json: @noises, status: 200
   end
 
