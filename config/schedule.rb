@@ -5,6 +5,11 @@ set :output, "../lib/cron/cron_log.log"
 # end
 
 every 30.minutes do
-  rake 'update_data'
-  puts "Updated demolition, construction, 911 noise complaints!"
+  rake 'update_data', :environment => 'development'
+  puts "Updated dev DB demolition, construction, 911 noise complaints at " + Time.now.to_s
+end
+
+every 30.minutes do
+  rake 'update_data', :environment => 'production'
+  puts "Updated production DB demolition, construction, 911 noise complaints at " + Time.now.to_s
 end
