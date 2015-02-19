@@ -1,5 +1,6 @@
 # config valid only for current version of Capistrano
 lock '3.3.5'
+require "whenever/capistrano"
 
 set :application, 'capstone-api'
 set :repo_url, 'git@github.com:katke/capstone-api.git'
@@ -8,8 +9,6 @@ set :use_sudo, false
 
 set :deploy_to, '/var/www/capstone-api'
 
-set :rake, "RAILS_ENV=production bundle exec rake update_data"
-require "whenever/capistrano"
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
