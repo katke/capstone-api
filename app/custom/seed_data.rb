@@ -36,7 +36,7 @@ class SeedData
         display_reach: display_reach
       )
 
-      update_description(noise)
+      update_description(noise, r)
       update_display_reach(noise)
       print "."
     end
@@ -60,7 +60,7 @@ class SeedData
         display_reach: display_reach
       )
 
-      update_description(noise)
+      update_description(noise, r)
       print "."
     end
     puts "\n#{noise_type} Imported"
@@ -158,9 +158,9 @@ class SeedData
   end
 
   # Tidy Descriptions
-  def self.update_description(noise)
+  def self.update_description(noise, r)
     if noise.noise_type == "trolley"
-      noise.update(description: "Trolley - #{common_name}", noise_type: "transit")
+      noise.update(description: "Trolley - #{r['common_name'].strip}", noise_type: "transit")
     elsif noise.noise_type == "busStop"
       noise.update(description: "Bus Stop - #{r['properties']['NAME']}", noise_type: "transit")
     elsif noise.noise_type == "transitCenter"
