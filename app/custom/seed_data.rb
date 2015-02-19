@@ -96,18 +96,16 @@ class SeedData
     results = get_json(hash[:file])["features"]
 
     results.each do |r|
-      if r["geometry"]
-        r["geometry"]["coordinates"].each do |f|
-          lat = f[1]
-          lon = f[0]
+      r["geometry"]["coordinates"].each do |f|
+        lat = f[1]
+        lon = f[0]
 
-          if Noise.in_seattle?(lat, lon)
-            name = hash[:description]
-            description = r["properties"][name]
+        if Noise.in_seattle?(lat, lon)
+          name = hash[:description]
+          description = r["properties"][name]
 
-            create_noise(description, noise_type, lat, lon, hash)
-            status_dot
-          end
+          create_noise(description, noise_type, lat, lon, hash)
+          status_dot
         end
       end
     end
@@ -126,7 +124,7 @@ class SeedData
         lon = r["longitude"]
 
         noise = create_noise(description, noise_type, lat, lon, hash)
-        create_perishable(noise.id, r["issue_date"], r["expiration_date"]
+        create_perishable(noise.id, r["issue_date"], r["expiration_date"])
         status_dot
       end
     end
