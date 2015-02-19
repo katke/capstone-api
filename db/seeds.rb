@@ -20,8 +20,8 @@ noises_to_create = {
   "construction" =>      { file_type: "stationary_perishable", file: "9yds-qdb3", decibel: 93, reach: 151, seasonal: false, display_reach: 6 },
   "demolition" =>        { file_type: "stationary_perishable", file: "j6ng-5q2r", decibel: 100, reach: 263, seasonal: false, display_reach: 9 },
   "noiseComplaints" =>   { file_type: "stationary_noise_complaints", file: "3k2p-39jp", decibel: 65, reach: 60, seasonal: false, display_reach: 2 },
-  "freeway" =>           { file_type: "gis_roads", file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute", display_reach: 0 },
-  # "railroad" =>        { file_type: "gis_roads", file: "lines/railroads", decibel: 80, reach: 30, description: "Name", display_reach: 0} ## Data seems inacurrate?
+  "freeway" =>           { file_type: "gis_roads", file: "lines/freeway", decibel: 80, reach: 30, description: "StateRoute", seasonal: false, display_reach: 0 },
+  # "railroad" =>        { file_type: "gis_roads", file: "lines/railroads", decibel: 80, reach: 30, description: "Name", seasonal: false, display_reach: 0} ## Data seems inacurrate?
 }
 
 # Create Noises!
