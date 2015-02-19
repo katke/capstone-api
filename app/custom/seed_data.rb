@@ -38,16 +38,16 @@ class SeedData
     end
   end
 
-  def self.create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
+  def self.create_noise(description, noise_type, lat, lon, hash)
     return Noise.create(
       description: description,
       noise_type: noise_type,
       lat: lat,
       lon: lon,
-      decibel: decibel,
-      reach: reach,
-      seasonal: seasonal,
-      display_reach: display_reach
+      decibel: hash[:decibel],
+      reach: hash[:reach],
+      seasonal: hash[:seasonal],
+      display_reach: hash[:display_reach]
     )
   end
 
@@ -61,7 +61,7 @@ class SeedData
       lat = r["latitude"]
       lon = r["longitude"]
 
-      noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
+      noise = create_noise(description, noise_type, lat, lon, hash)
 
       update_description(noise, r)
       update_display_reach(noise)
@@ -80,7 +80,7 @@ class SeedData
       lat = r["geometry"]["coordinates"][1]
       lon = r["geometry"]["coordinates"][0]
 
-      noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
+      noise = create_noise(description, noise_type, lat, lon, hash)
 
       update_description(noise, r)
       print "."
@@ -102,7 +102,7 @@ class SeedData
           if Noise.in_seattle?(lat, lon)
             name = hash[:description]
             description = r["properties"][name]
-            create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
+            create_noise(description, noise_type, lat, lon, hash)
             print "."
           end
         end
@@ -125,7 +125,7 @@ class SeedData
           description = r["description"]
           lat = r["latitude"]
           lon = r["longitude"]
-          noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
+          noise = create_noise(description, noise_type, lat, lon, hash)
 
           Perishable.create(
             noise_id: noise.id,
@@ -154,7 +154,7 @@ class SeedData
         lat = r["latitude"]
         lon = r["longitude"]
         
-        noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
+        noise = create_noise(description, noise_type, lat, lon, hash)
       end
       print "."
     end
