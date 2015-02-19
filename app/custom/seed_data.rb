@@ -2,6 +2,25 @@ require 'json'
 require 'date'
 
 class SeedData
+  # Command to Run Imports
+  def self.import_data(noises_to_create)
+    noises_to_create.each do |k, v|
+      case v[:file_type]
+      when "regular_stationary"
+        stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "gis_stationary"
+        gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "stationary_perishable"
+        perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "stationary_noise_complaints"
+        noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "gis_roads"
+        gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description], v[:display_reach])
+      else
+        puts "?"
+      end
+    end 
+  end
 
   # Obtain Data
   def self.get_json(file)
