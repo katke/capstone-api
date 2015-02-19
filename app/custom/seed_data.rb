@@ -2,6 +2,25 @@ require 'json'
 require 'date'
 
 class SeedData
+  # Command to Run Imports
+  def self.import_data(noises_to_create)
+    noises_to_create.each do |k, v|
+      case v[:file_type]
+      when "regular_stationary"
+        stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "gis_stationary"
+        gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "stationary_perishable"
+        perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "stationary_noise_complaints"
+        noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+      when "gis_roads"
+        gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description], v[:display_reach])
+      else
+        puts "?"
+      end
+    end 
+  end
 
   # Obtain Data
   def self.get_json(file)
@@ -170,14 +189,16 @@ class SeedData
 
   # Tidy Display Reaches
   def self.update_display_reach(noise)
-    if noise.noise_type == "college"
-      name = noise.description
-      noise.update(display_reach: 55) if name == "University Of Washington"
-      noise.update(display_reach: 30) if name == "Seattle University"
-    elsif noise.noise_type == "heliportOrAirport"
-      name = noise.description
-      noise.update(display_reach: 100) if name == "King County International Airport (Boeing Field)"
-      noise.update(display_reach: 150) if name == "Seattle-Tacoma International Airport"
+    reach_hash = {
+      "University Of Washington" => 55,
+      "Seattle University" => 30,
+      "King County International Airport (Boeing Field)" => 100,
+      "Seattle-Tacoma International Airport" => 150
+    }
+
+    name = noise.description
+    if reach_hash.keys.include?(name)
+      noise.update(display_reach: reach_hash[name])
     end
   end
 end

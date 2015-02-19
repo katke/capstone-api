@@ -15,13 +15,6 @@ class UpdateData
     }
 
     # Recreate data
-    noises_to_update.each do |k, v|
-      case v[:file_type]
-      when "stationary_perishable"
-        SeedData.perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
-      when "stationary_noise_complaints"
-        SeedData.noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
-      end
-    end
+    SeedData.import_data(noises_to_update)
   end
 end

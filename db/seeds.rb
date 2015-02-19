@@ -25,22 +25,7 @@ noises_to_create = {
 }
 
 # Create Noises!
-noises_to_create.each do |k, v|
-  case v[:file_type]
-  when "regular_stationary"
-    SeedData.stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
-  when "gis_stationary"
-    SeedData.gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
-  when "stationary_perishable"
-    SeedData.perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
-  when "stationary_noise_complaints"
-    SeedData.noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
-  when "gis_roads"
-    SeedData.gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description], v[:display_reach])
-  else
-    puts "?"
-  end
-end
+SeedData.import_data(noises_to_create)
 
 # Everything's Done!
 puts "Seeding Complete! #{Noise.count} Noises in Database! :)"
