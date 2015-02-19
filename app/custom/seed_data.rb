@@ -19,7 +19,7 @@ class SeedData
       else
         puts "?"
       end
-    end 
+    end
   end
 
   # Obtain Data
@@ -168,8 +168,10 @@ class SeedData
           display_reach: display_reach
           )
         unless noise.description
-          noise.update(description: "Noise Disturbance")
+          noise.update(description: "Unspecified Noise Disturbance")
         end
+        noise.description = noise.description.capitalize
+        noise.save
       end
       print "."
     end
@@ -184,6 +186,8 @@ class SeedData
       noise.update(description: "Bus Stop - #{r['properties']['NAME']}", noise_type: "transit")
     elsif noise.noise_type == "transitCenter"
       noise.update(description: "Transit Center - #{r['properties']['NAME']}", noise_type: "transit")
+    elsif noise.noise_type == "bar"
+      noise.update(description: r["common_name"].strip.capitalize)
     end
   end
 

@@ -1,5 +1,5 @@
 [
-  {"address":"1250 1st Avenue South, Seattle, WA 98134, USA","city_feature":"Bars","common_name":"SAFECO FIELD ","longitude":"-122.3332268","latitude":"47.5909875"},
-  {"address":"800 Occidental Avenue South, Seattle, WA 98134, USA","city_feature":"Bars","common_name":"CENTURY LINK FIELD ","longitude":"-122.331601","latitude":"47.5951456"},
-  {"address":"401 1st Avenue North, Seattle, WA 98109, USA","city_feature":"Bars","common_name":"KEY ARENA ","longitude":"-122.3554444","latitude":"47.6221127"}
+  {"address":"1250 1st Avenue South, Seattle, WA 98134, USA","city_feature":"Bars","common_name":"Safeco Field","longitude":"-122.3332268","latitude":"47.5909875"},
+  {"address":"800 Occidental Avenue South, Seattle, WA 98134, USA","city_feature":"Bars","common_name":"Century Link Field","longitude":"-122.331601","latitude":"47.5951456"},
+  {"address":"401 1st Avenue North, Seattle, WA 98109, USA","city_feature":"Bars","common_name":"Key Arena","longitude":"-122.3554444","latitude":"47.6221127"}
 ]
