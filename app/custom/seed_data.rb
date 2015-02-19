@@ -117,27 +117,27 @@ class SeedData
     results = get_json(hash[:file])
 
     results.each do |r|
-      # Checks for existing expiration date
-      if r["expiration_date"]
-        # Check that permit is active
-        result = Date.today <=> r["expiration_date"].to_date
-        if result == -1
-          description = r["description"]
-          lat = r["latitude"]
-          lon = r["longitude"]
-          noise = create_noise(description, noise_type, lat, lon, hash)
+      if r["expiration_date"] && permit_active?(r["expiration_date"])
+        description = r["description"]
+        lat = r["latitude"]
+        lon = r["longitude"]
+        noise = create_noise(description, noise_type, lat, lon, hash)
 
-          Perishable.create(
-            noise_id: noise.id,
-            start: r["issue_date"],
-            end: r["expiration_date"]
-          )
+        Perishable.create(
+          noise_id: noise.id,
+          start: r["issue_date"],
+          end: r["expiration_date"]
+        )
 
-          print "."
-        end
+        print "."
       end
     end
     puts "\n#{noise_type} Imported"
+  end
+
+  def self.permit_active?(date)
+    result = Date.today <=> date.to_date
+    result == -1 ? true : false
   end
 
   # Add Noise Complaints
