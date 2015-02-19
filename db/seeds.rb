@@ -45,6 +45,10 @@ def stationary_locations(noise_type, file, decibel, reach, seasonal, display_rea
       name = noise.description
       noise.update(display_reach: 55) if name == "University Of Washington"
       noise.update(display_reach: 30) if name == "Seattle University"
+    elsif noise.noise_type == "heliportOrAirport"
+      name = noise.description
+      noise.update(display_reach: 100) if name == "King County International Airport (Boeing Field)"
+      noise.update(display_reach: 150) if name == "Seattle-Tacoma International Airport"
     end
 
     print "."
