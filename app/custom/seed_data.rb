@@ -45,6 +45,7 @@ class SeedData
 
     results.each do |r|
       noise = Noise.create(
+        description: r["common_name"].strip,
         noise_type: noise_type,
         lat: r["latitude"],
         lon: r["longitude"],
@@ -53,11 +54,6 @@ class SeedData
         seasonal: seasonal,
         display_reach: display_reach
       )
-      if noise.noise_type == "bar"
-        noise.update(description: r["common_name"].strip.capitalize)
-      else
-        noise.update(description: r["common_name"].strip)
-      end
 
       update_description(noise, r)
       update_display_reach(noise)
@@ -190,6 +186,8 @@ class SeedData
       noise.update(description: "Bus Stop - #{r['properties']['NAME']}", noise_type: "transit")
     elsif noise.noise_type == "transitCenter"
       noise.update(description: "Transit Center - #{r['properties']['NAME']}", noise_type: "transit")
+    elsif noise.noise_type == "bar"
+      noise.update(description: r["common_name"].strip.capitalize)
     end
   end
 
