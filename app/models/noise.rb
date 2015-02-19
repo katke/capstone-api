@@ -57,25 +57,29 @@ class Noise < ActiveRecord::Base
     end
   end
 
-  def self.get_descriptive_name(type, count)
-    names_hash = {
-      "fireStation" => "Fire Station",
-      "school" => "School",
-      "college" => "College",
-      "transit" => "Transit Stop",
-      "hospital" => "Hospital",
-      "bar" => "Bar",
-      "heliportOrAirport" => "Heliport/Airport",
-      "stadium" => "Stadium",
-      "policeStation" => "Police Station",
-      "dump" => "Dump",
-      "construction" => "Construction Site",
-      "demolition" => "Demolition Site",
-      "noiseComplaints" => "Noise Complaint",
-      "freeway" => "Freeway"
+  def self.noise_data_hash(noise_type, data_requested)
+    hash = {
+      "fireStation" =>       { name: "Fire Station", icon: "fire" },
+      "school" =>            { name: "School", icon: "book" },
+      "college" =>           { name: "College", icon: "pencil" },
+      "transit" =>           { name: "Transit Stop", icon: "road" },
+      "hospital" =>          { name: "Hospital", icon: "plus-sign" },
+      "bar" =>               { name: "Bar", icon: "glass" },
+      "heliportOrAirport" => { name: "Heliport/Airport", icon: "plane" },
+      "stadium" =>           { name: "Stadium", icon: "volume-up" },
+      "policeStation" =>     { name: "Police Station", icon: "bullhorn" },
+      "dump" =>              { name: "Dump", icon: "trash" },
+      "construction" =>      { name: "Construction Site", icon: "wrench" },
+      "demolition" =>        { name: "Demolition Site", icon: "warning-sign" },
+      "noiseComplaints" =>   { name: "Noise Complaint", icon: "phone-alt" },
+      "freeway" =>           { name: "Freeway", icon: "road" }
     }
+    hash[noise_type][data_requested]
+  end
 
-    "#{count} #{names_hash[type].pluralize(count)}"
+  def self.get_descriptive_name(type, count)
+    name = noise_data_hash(type, :name)
+    "#{count} #{name.pluralize(count)}"
   end
 
   def self.format_description(string)
@@ -83,24 +87,7 @@ class Noise < ActiveRecord::Base
   end
 
   def self.get_icon(type)
-    icons_hash = {
-      "fireStation" => "fire",
-      "school" => "book",
-      "college" => "pencil",
-      "transit" => "road",
-      "hospital" => "plus-sign",
-      "bar" => "glass",
-      "heliportOrAirport" => "plane",
-      "stadium" => "volume-up",
-      "policeStation" => "bullhorn",
-      "dump" => "trash",
-      "construction" => "wrench",
-      "demolition" => "wrench",
-      "noiseComplaints" => "phone-alt",
-      "freeway" => "road"
-    }
-
-    icons_hash[type]
+    noise_data_hash(type, :icon)
   end
 
   def self.get_decibel_total(origin_lat, origin_lon, array_of_noises)
