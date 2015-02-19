@@ -162,15 +162,24 @@ class SeedData
 
   # Tidy Descriptions
   def self.update_description(noise, r)
-    if noise.noise_type == "trolley"
-      noise.update(description: "Trolley - #{r['common_name'].strip}", noise_type: "transit")
-    elsif noise.noise_type == "busStop"
-      noise.update(description: "Bus Stop - #{r['properties']['NAME']}", noise_type: "transit")
-    elsif noise.noise_type == "transitCenter"
-      noise.update(description: "Transit Center - #{r['properties']['NAME']}", noise_type: "transit")
-    elsif noise.noise_type == "bar"
+    type = noise.noise_type
+    if type == "trolley" || type == "busStop" || type == "transitCenter"
+      update_transit(noise, r)
+    elsif type == "bar"
       noise.update(description: r["common_name"].strip.capitalize)
     end
+  end
+
+  def self.update_transit(noise, r)
+    if noise.noise_type == "trolley"
+      description = "Trolley - #{r['common_name'].strip}"
+    elsif noise.noise_type == "busStop"
+      description = "Bus Stop - #{r['properties']['NAME']}"
+    elsif noise.noise_type == "transitCenter"
+      description = "Transit Center - #{r['properties']['NAME']}"
+    end
+
+    noise.update(description: description, noise_type: "transit")
   end
 
   # Tidy Display Reaches
