@@ -38,22 +38,30 @@ class SeedData
     end
   end
 
+  def self.create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
+    return Noise.create(
+      description: description,
+      noise_type: noise_type,
+      lat: lat,
+      lon: lon,
+      decibel: decibel,
+      reach: reach,
+      seasonal: seasonal,
+      display_reach: display_reach
+    )
+  end
+
   # Add Stationary Non-GIS Locations
   def self.stationary_locations(noise_type, file, decibel, reach, seasonal, display_reach)
     puts "\n[Starting #{noise_type}]"
     results = get_json(file)
 
     results.each do |r|
-      noise = Noise.create(
-        description: r["common_name"].strip,
-        noise_type: noise_type,
-        lat: r["latitude"],
-        lon: r["longitude"],
-        decibel: decibel,
-        reach: reach,
-        seasonal: seasonal,
-        display_reach: display_reach
-      )
+      description = r["common_name"].strip
+      lat = r["latitude"]
+      lon = r["longitude"]
+
+      noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
 
       update_description(noise, r)
       update_display_reach(noise)
@@ -68,16 +76,11 @@ class SeedData
     results = get_json(file)["features"]
 
     results.each do |r|
-      noise = Noise.create(
-        description: r["properties"]["NAME"],
-        noise_type: noise_type,
-        lat: r["geometry"]["coordinates"][1],
-        lon: r["geometry"]["coordinates"][0],
-        decibel: decibel,
-        reach: reach,
-        seasonal: seasonal,
-        display_reach: display_reach
-      )
+      description = r["properties"]["NAME"]
+      lat = r["geometry"]["coordinates"][1]
+      lon = r["geometry"]["coordinates"][0]
+
+      noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
 
       update_description(noise, r)
       print "."
@@ -97,16 +100,8 @@ class SeedData
           lon = f[0]
 
           if Noise.in_seattle?(lat, lon)
-            Noise.create(
-              description: r["properties"][name],
-              noise_type: noise_type,
-              lat: lat,
-              lon: lon,
-              decibel: decibel,
-              reach: reach,
-              seasonal: false,
-              display_reach: display_reach
-            )
+            description = r["properties"][name]
+            create_noise(description, noise_type, lat, lon, decibel, reach, false, display_reach)
             print "."
           end
         end
@@ -126,16 +121,11 @@ class SeedData
         # Check that permit is active
         result = Date.today <=> r["expiration_date"].to_date
         if result == -1
-          noise = Noise.create(
-            description: r["description"],
-            noise_type: noise_type,
-            lat: r["latitude"],
-            lon: r["longitude"],
-            decibel: decibel,
-            reach: reach,
-            seasonal: seasonal,
-            display_reach: display_reach
-          )
+          description = r["description"]
+          lat = r["latitude"]
+          lon = r["longitude"]
+
+          noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
 
           Perishable.create(
             noise_id: noise.id,
@@ -156,22 +146,15 @@ class SeedData
     results = get_json(file)
 
     results.each do |r|
-      unless /WEAPON/i.match(r["initial_type_description"]) || /SHOTS/i.match(r["initial_type_description"]) || /ASLT/i.match(r["initial_type_description"]) || /HARAS/i.match(r["initial_type_description"])
-        noise = Noise.create(
-          description: r["initial_type_description"],
-          noise_type: noise_type,
-          lat: r["latitude"],
-          lon: r["longitude"],
-          decibel: decibel,
-          reach: reach,
-          seasonal: seasonal,
-          display_reach: display_reach
-          )
-        unless noise.description
-          noise.update(description: "Unspecified Noise Disturbance")
-        end
-        noise.description = noise.description.capitalize
-        noise.save
+      description = r["initial_type_description"]
+
+      unless /WEAPON/i.match(description) || /SHOTS/i.match(description) || /ASLT/i.match(description) || /HARAS/i.match(description)
+        description ? description = description.capitalize : description = "Unspecified Noise Disturbance"
+
+        lat = r["latitude"]
+        lon = r["longitude"]
+
+        noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
       end
       print "."
     end
