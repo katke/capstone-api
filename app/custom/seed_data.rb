@@ -22,6 +22,10 @@ class SeedData
     end
   end
 
+  def self.status_dot
+    print "."
+  end
+
   # Obtain Data
   def self.get_json(file)
     if file.match(/\//)
@@ -62,10 +66,9 @@ class SeedData
       lon = r["longitude"]
 
       noise = create_noise(description, noise_type, lat, lon, hash)
-
       update_description(noise, r)
       update_display_reach(noise)
-      print "."
+      status_dot
     end
     puts "\n#{noise_type} Imported"
   end
@@ -81,9 +84,8 @@ class SeedData
       lon = r["geometry"]["coordinates"][0]
 
       noise = create_noise(description, noise_type, lat, lon, hash)
-
       update_description(noise, r)
-      print "."
+      status_dot
     end
     puts "\n#{noise_type} Imported"
   end
@@ -102,8 +104,9 @@ class SeedData
           if Noise.in_seattle?(lat, lon)
             name = hash[:description]
             description = r["properties"][name]
+
             create_noise(description, noise_type, lat, lon, hash)
-            print "."
+            status_dot
           end
         end
       end
@@ -121,15 +124,10 @@ class SeedData
         description = r["description"]
         lat = r["latitude"]
         lon = r["longitude"]
+
         noise = create_noise(description, noise_type, lat, lon, hash)
-
-        Perishable.create(
-          noise_id: noise.id,
-          start: r["issue_date"],
-          end: r["expiration_date"]
-        )
-
-        print "."
+        create_perishable(noise.id, r["issue_date"], r["expiration_date"]
+        status_dot
       end
     end
     puts "\n#{noise_type} Imported"
@@ -138,6 +136,10 @@ class SeedData
   def self.permit_active?(date)
     result = Date.today <=> date.to_date
     result == -1 ? true : false
+  end
+
+  def self.create_perishable(id, issue_date, expiration_date)
+    Perishable.create(noise_id: id, start: issue_date, end: expiration_date)
   end
 
   # Add Noise Complaints
@@ -150,13 +152,12 @@ class SeedData
 
       unless /WEAPON/i.match(description) || /SHOTS/i.match(description) || /ASLT/i.match(description) || /HARAS/i.match(description)
         description ? description = description.capitalize : description = "Unspecified Noise Disturbance"
-        
         lat = r["latitude"]
         lon = r["longitude"]
         
         noise = create_noise(description, noise_type, lat, lon, hash)
+        status_dot
       end
-      print "."
     end
     puts "\n#{noise_type} Imported"
   end
