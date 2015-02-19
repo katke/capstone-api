@@ -35,26 +35,23 @@ class Noise < ActiveRecord::Base
     if array.any?
       activerecordify = Noise.where(id: array.map(&:id))
       groups = activerecordify.group(:noise_type).count
-
-      groups.map do |k, v|
-        hash = { noise_type: get_descriptive_name(k, v), icon: get_icon(k), details: nil }
-        if k == "construction" || k == "demolition" || k == "noiseComplaints"
-          detailed_noises = activerecordify.where(noise_type: "#{k}");
-          long_descriptions = detailed_noises.map do |i|
-            format_description(i.description)
-          end
-
-          hash[:details] = long_descriptions
-        elsif k == "freeway"
-          freeway_count = activerecordify.where(noise_type: "freeway").group(:description).count.keys.length
-          hash[:noise_type] = get_descriptive_name(k, freeway_count)
-        end
-
-        hash
-      end
+      groups.map { |k, v| assemble_noise_entry(k, v, activerecordify) }
     else
       [{ noise_type: "No significant noises within range!", icon: "heart", details: nil }]
     end
+  end
+
+  def self.assemble_noise_entry(k, v, array)
+    hash = { noise_type: get_descriptive_name(k, v), icon: get_icon(k), details: nil }
+    
+    if k == "construction" || k == "demolition" || k == "noiseComplaints"
+      hash[:details] = add_details(k, array)
+    elsif k == "freeway"
+      freeway_count = array.where(noise_type: "freeway").group(:description).count.keys.length
+      hash[:noise_type] = get_descriptive_name(k, freeway_count)
+    end
+    
+    return hash
   end
 
   def self.noise_data_hash(noise_type, data_requested)
@@ -75,6 +72,13 @@ class Noise < ActiveRecord::Base
       "freeway" =>           { name: "Freeway", icon: "road" }
     }
     hash[noise_type][data_requested]
+  end
+
+  def self.add_details(k, array)
+    detailed_noises = array.where(noise_type: "#{k}")
+    detailed_noises.map do |i|
+      format_description(i.description)
+    end
   end
 
   def self.get_descriptive_name(type, count)
