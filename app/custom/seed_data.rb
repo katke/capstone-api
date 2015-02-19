@@ -189,14 +189,16 @@ class SeedData
 
   # Tidy Display Reaches
   def self.update_display_reach(noise)
-    if noise.noise_type == "college"
-      name = noise.description
-      noise.update(display_reach: 55) if name == "University Of Washington"
-      noise.update(display_reach: 30) if name == "Seattle University"
-    elsif noise.noise_type == "heliportOrAirport"
-      name = noise.description
-      noise.update(display_reach: 100) if name == "King County International Airport (Boeing Field)"
-      noise.update(display_reach: 150) if name == "Seattle-Tacoma International Airport"
+    reach_hash = {
+      "University Of Washington" => 55,
+      "Seattle University" => 30,
+      "King County International Airport (Boeing Field)" => 100,
+      "Seattle-Tacoma International Airport" => 150
+    }
+
+    name = noise.description
+    if reach_hash.keys.include?(name)
+      noise.update(display_reach: reach_hash[name])
     end
   end
 end
