@@ -7,15 +7,15 @@ class SeedData
     noises_to_create.each do |k, v|
       case v[:file_type]
       when "regular_stationary"
-        stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+        stationary_locations(k, v)
       when "gis_stationary"
-        gis_stationary_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+        gis_stationary_locations(k, v)
       when "stationary_perishable"
-        perishable_locations(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+        perishable_locations(k, v)
       when "stationary_noise_complaints"
-        noise_complaints(k, v[:file], v[:decibel], v[:reach], v[:seasonal], v[:display_reach])
+        noise_complaints(k, v)
       when "gis_roads"
-        gis_lines(k, v[:file], v[:decibel], v[:reach], v[:description], v[:display_reach])
+        gis_lines(k, v)
       else
         puts "?"
       end
@@ -52,16 +52,16 @@ class SeedData
   end
 
   # Add Stationary Non-GIS Locations
-  def self.stationary_locations(noise_type, file, decibel, reach, seasonal, display_reach)
+  def self.stationary_locations(noise_type, hash)
     puts "\n[Starting #{noise_type}]"
-    results = get_json(file)
+    results = get_json(hash[:file])
 
     results.each do |r|
       description = r["common_name"].strip
       lat = r["latitude"]
       lon = r["longitude"]
 
-      noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
+      noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
 
       update_description(noise, r)
       update_display_reach(noise)
@@ -71,16 +71,16 @@ class SeedData
   end
 
   # Add Stationary GIS Locations
-  def self.gis_stationary_locations(noise_type, file, decibel, reach, seasonal, display_reach)
+  def self.gis_stationary_locations(noise_type, hash)
     puts "\n[Starting #{noise_type}]"
-    results = get_json(file)["features"]
+    results = get_json(hash[:file])["features"]
 
     results.each do |r|
       description = r["properties"]["NAME"]
       lat = r["geometry"]["coordinates"][1]
       lon = r["geometry"]["coordinates"][0]
 
-      noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
+      noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
 
       update_description(noise, r)
       print "."
@@ -89,9 +89,9 @@ class SeedData
   end
 
   # Adding Non-Stationary GIS Points
-  def self.gis_lines(noise_type, file, decibel, reach, name, display_reach)
+  def self.gis_lines(noise_type, hash)
     puts "\n[Starting #{noise_type}]"
-    results = get_json(file)["features"]
+    results = get_json(hash[:file])["features"]
 
     results.each do |r|
       if r["geometry"]
@@ -100,8 +100,9 @@ class SeedData
           lon = f[0]
 
           if Noise.in_seattle?(lat, lon)
+            name = hash[:description]
             description = r["properties"][name]
-            create_noise(description, noise_type, lat, lon, decibel, reach, false, display_reach)
+            create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
             print "."
           end
         end
@@ -111,9 +112,9 @@ class SeedData
   end
 
   # Add Perishable Noises
-  def self.perishable_locations(noise_type, file, decibel, reach, seasonal, display_reach)
+  def self.perishable_locations(noise_type, hash)
     puts "\n[Starting #{noise_type}]"
-    results = get_json(file)
+    results = get_json(hash[:file])
 
     results.each do |r|
       # Checks for existing expiration date
@@ -124,8 +125,7 @@ class SeedData
           description = r["description"]
           lat = r["latitude"]
           lon = r["longitude"]
-
-          noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
+          noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
 
           Perishable.create(
             noise_id: noise.id,
@@ -141,20 +141,20 @@ class SeedData
   end
 
   # Add Noise Complaints
-  def self.noise_complaints(noise_type, file, decibel, reach, seasonal, display_reach)
+  def self.noise_complaints(noise_type, hash)
     puts "\n[Starting #{noise_type}]"
-    results = get_json(file)
+    results = get_json(hash[:file])
 
     results.each do |r|
       description = r["initial_type_description"]
 
       unless /WEAPON/i.match(description) || /SHOTS/i.match(description) || /ASLT/i.match(description) || /HARAS/i.match(description)
         description ? description = description.capitalize : description = "Unspecified Noise Disturbance"
-
+        
         lat = r["latitude"]
         lon = r["longitude"]
-
-        noise = create_noise(description, noise_type, lat, lon, decibel, reach, seasonal, display_reach)
+        
+        noise = create_noise(description, noise_type, lat, lon, hash[:decibel], hash[:reach], hash[:seasonal], hash[:display_reach])
       end
       print "."
     end
