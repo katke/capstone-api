@@ -19,7 +19,7 @@ class SeedData
       else
         puts "?"
       end
-    end 
+    end
   end
 
   # Obtain Data
@@ -45,7 +45,6 @@ class SeedData
 
     results.each do |r|
       noise = Noise.create(
-        description: r["common_name"].strip,
         noise_type: noise_type,
         lat: r["latitude"],
         lon: r["longitude"],
@@ -54,6 +53,11 @@ class SeedData
         seasonal: seasonal,
         display_reach: display_reach
       )
+      if noise.noise_type == "bar"
+        noise.update(description: r["common_name"].strip.capitalize)
+      else
+        noise.update(description: r["common_name"].strip)
+      end
 
       update_description(noise, r)
       update_display_reach(noise)
@@ -168,8 +172,10 @@ class SeedData
           display_reach: display_reach
           )
         unless noise.description
-          noise.update(description: "Noise Disturbance")
+          noise.update(description: "Unspecified Noise Disturbance")
         end
+        noise.description = noise.description.capitalize
+        noise.save
       end
       print "."
     end
