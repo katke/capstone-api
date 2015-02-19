@@ -3,12 +3,27 @@
 <head>
   <title>CapstoneApi</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <%= link_to "<h1>Shut Up, Seattle</h1>".html_safe, "#", {class: "navbar-brand"} %>
+      </div>
+      <div class="navbar-text navbar-right">
+        <%= link_to "About", "#", {class: "navbar-link"} %>
+        <%= link_to "Contact", "#", {class: "navbar-link"} %>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid main">
+    <%= yield %>
+  </div>
 
 </body>
 </html>
