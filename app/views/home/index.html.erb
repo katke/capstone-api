@@ -10,7 +10,7 @@
 
 <p>To retrieve a list of all the noises in our database, currently limited to only Seattle, use the following query:</p>
 
-<code>GET /noises</code>
+<code>GET http://api.shutupseattle.com/noises</code>
 
 <p>The response should be formatted as follows:</p>
 
@@ -18,7 +18,7 @@
 [
   {
     "id":35701,
-    "noise_type":"Bus Stop",
+    "noise_type":"fireStation",
     "lat":47.699030679286,
     "lon":-122.387459787663,
     "decibel":125,
@@ -28,7 +28,7 @@
   },
   {
     "id":35702
-    noise_type":"Bus Stop"
+    noise_type":"fireStation"
     lat":47.6983180192103
     lon":-122.387461371929,
     "decibel":125,
@@ -38,7 +38,7 @@
   },
   {
     "id":35703
-    noise_type":"Bus Stop"
+    noise_type":"fireStation"
     lat":47.6947601855865
     lon":-122.387469612068,
     "decibel":125,
@@ -53,7 +53,7 @@
 
 <p>To generate a Location Score, you'll need to supply the API with latitude and longitude coordinates of your query location. For example:</p>
 
-<code>GET /score?latitude=47.63619109&longitude=-122.34287009</code>
+<code>GET http://api.shutupseattle.com/score?latitude=47.63619109&longitude=-122.34287009</code>
 
 <p>A successful result will look like this:</p>
 
