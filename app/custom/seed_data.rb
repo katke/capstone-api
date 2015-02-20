@@ -95,21 +95,23 @@ class SeedData
     puts "\n[Starting #{noise_type}]"
     results = get_json(hash[:file])["features"]
 
-    results.each do |r|
-      r["geometry"]["coordinates"].each do |f|
-        lat = f[1]
-        lon = f[0]
+    results.each { |r| turn_line_into_points(r, noise_type, hash) }
+    puts "\n#{noise_type} Imported"
+  end
 
-        if Noise.in_seattle?(lat, lon)
-          name = hash[:description]
-          description = r["properties"][name]
+  def self.turn_line_into_points(r, noise_type, hash)
+    r["geometry"]["coordinates"].each do |f|
+      lat = f[1]
+      lon = f[0]
 
-          create_noise(description, noise_type, lat, lon, hash)
-          status_dot
-        end
+      if Noise.in_seattle?(lat, lon)
+        name = hash[:description]
+        description = r["properties"][name]
+
+        create_noise(description, noise_type, lat, lon, hash)
+        status_dot
       end
     end
-    puts "\n#{noise_type} Imported"
   end
 
   # Add Perishable Noises
