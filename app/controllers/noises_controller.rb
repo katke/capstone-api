@@ -34,7 +34,6 @@ class NoisesController < ApplicationController
   end
 
   def validate_ip
-    # client_ip = request.env["REMOTE_ADDR"]
     client_ip = request.env["REMOTE_HOST"]
     unless client_ip == ENV["ACCEPTED_IP"]
       render json: "Unauthorized User", status: 401
